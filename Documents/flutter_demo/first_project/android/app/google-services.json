@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "642379335325",
+    "project_id": "inform-3548d",
+    "storage_bucket": "inform-3548d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642379335325:android:03968c2945962a7e82b674",
+        "android_client_info": {
+          "package_name": "com.example.first_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "642379335325-8r4lk2p9r45a3k5eftoifdro194qfmak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0P0AaI20OKT8-Hs751jCuZCXSqZcbAvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "642379335325-8r4lk2p9r45a3k5eftoifdro194qfmak.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
