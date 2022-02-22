@@ -19,14 +19,14 @@ class Final_Login extends StatelessWidget {
                   SizedBox(height: 20,),
                   Column(
                     children: [
-                       new Text(
-                    "Hello \n",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black, 
-                    ),
-                  ),
+                      new Text(
+                      "Hello \n",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black, 
+                        ),
+                      ),
 
                   new Text(
                     " It's all about your interest...\n Events, News, Courses, Jobs \n in the feild that you want to\n learn about \n hope you like it\ thank you ",
@@ -47,6 +47,7 @@ class Final_Login extends StatelessWidget {
                 child: RaisedButton (
                   
                   onPressed: () {
+                    // Navigator.pushNamed(context, "Registration");
                     Navigator.push(
                       context,
                       new MaterialPageRoute(

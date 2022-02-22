@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'All.dart';
+import 'Menu.dart';
 
 
 
@@ -11,7 +12,15 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {    
     return Scaffold(
-      
+      drawer: 
+      IconButton(
+                        onPressed: null,
+                        icon: Icon(Icons.menu),
+                        // color: Colors.grey[800],  light mode
+                        color: Colors.grey[350],
+
+                      ),
+      // backgroundColor: Colors.black12,
       body:
          new Container(
             //row one
@@ -19,177 +28,223 @@ class Home extends StatelessWidget {
             child: new Column(
             
               children: [
-                SizedBox(height: 20,),
+            
+                SizedBox(height: 30,),
+                
                 new Row(
-                  
-                  //****************row1
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                   children: [
-                    // Padding(padding: EdgeInsets.only(top: 50)),
-                    // App Name ..
-                    new Text(
-                    
-                    "APEye",
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[800], 
+                          
+                      IconButton(
+                        onPressed: null,
+                        icon: Icon(Icons.menu),
+                        // color: Colors.grey[800],  light mode
+                        color: Colors.grey[350],
+
                       ),
-                    ),
                     
+
                     new Row(
-                      
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        //Notification && dots
-                        
-                        Icon(Icons.person, color: Colors.grey[700], size: 30),
-                        SizedBox(width: 10,),
+                         Container(  
+                      //  padding: EdgeInsets.all(5),
+                    //  margin: EdgeInsets.only(right: 10),
+                     child: SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: Container(
+                        decoration: BoxDecoration(
+                       
+                      //  color: Colors.yellow,
+                       borderRadius: BorderRadius.circular(50),
+
+                     ),
+                     child: IconButton(
+                      //  ************ call setting widget
+                       onPressed: () {},
+                       icon: Icon(
+                         Icons.search,                    
+                          // color: Colors.grey[800], light mode
+                          color: Colors.grey[350],
+                          
+                         size: 20,                         
+                       ),
+                     ),
+                      ),
+                     
+                   ),   
+                    ),
+
+                     Container(
+                     padding: EdgeInsets.all(5),
+                    //  margin: EdgeInsets.only(right: 10),
+                     child: SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: Container(
+                        decoration: BoxDecoration(
+                       
+                      //  color: Colors.yellow,
+                       borderRadius: BorderRadius.circular(50),
+
+                     ),
+                     child: IconButton(
+                      //  ************ call setting widget
+                       onPressed: () {},
+                       icon: Icon(
+                         Icons.settings,                    
+                          // color: Colors.grey[800], light mode
+                          color: Colors.grey[350],
+
+                          
+                         size: 20,                         
+                       ),
+                     ),
+                      ),
+                     
+                   ),   
+                    ),
                       ],
                     ),
-                  ],
-                ),
-                SizedBox(height: 30,),
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    // Padding(padding: EdgeInsets.all(2)),
+                      
+                    
+                   
+                      //   ],
+                      // ),
+                    
+                    
+                   
                     //search && setting...
                     // SearchDelegate(searchFieldLabel: '', )
-                     Container(
+
                       
-                      height: 40,
-                      width: 250,
-                      child: TextFormField( 
-                        
-                        onChanged: (value) => email = value,             
-                      decoration: InputDecoration(
-                        
-                        filled: true,
-                        // icon: Icon(Icons.search),                    
-                        hintText: "Search...",
-                        enabledBorder: OutlineInputBorder(
-                          // borderSide: BorderSide(color: Colors.grey),                       
-                          borderRadius: BorderRadius.circular(5),                       
-                        ),
-                      ),                    
-                    ),
-                     ),
-                    //  Container(
-                    //    padding: EdgeInsets.all(5),
-                    //    margin: EdgeInsets.only(right: 10),
-                    //    decoration: BoxDecoration(
-                    //      color: Colors.yellow,
-                    //      borderRadius: BorderRadius.circular(50),
-                    //    ),
-                    //    child:
-                    Icon(Icons.settings, color: Colors.grey[800], size: 30,),
-                    //  ), 
-                     
+                    
+                                  
                   ],
                 ),
-                SizedBox(height: 30,),
+                SizedBox(height: 10,),
                 SingleChildScrollView(
                   // *************categoris 
                   scrollDirection: Axis.horizontal,
                   child: new Row(
                   children: [      
-                    Padding(padding: EdgeInsets.all(5)),            
-                    new Card(
-                      color: Colors.yellow[600],
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(200.0)),
-                      child: new FlatButton(
-                        minWidth: 85,
-                        height: 25,
-                        onPressed: null,
-                        child: new Text(
-                          "All",
-                          style: TextStyle(
-                            color: Colors.grey[800],
-                          ),
-                        ),
-                          
-                      ),
-                    ),
+                    Padding(padding: EdgeInsets.all(10)),
+                                
 
-                    new Card(
-                      color: Colors.yellow[400],
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(200.0)),
-                      child: new FlatButton(
-                        minWidth: 85,
-                        height: 25,
-                        onPressed: null,
-                        child: new Text(
-                          "Jobs",
-                          style: TextStyle(
-                            color: Colors.black,
+                      new Container(
+                        child: SizedBox(
+                          width: 70,
+                          height: 30,
+                          child: Container(
+                            margin: EdgeInsets.only(right: 5),
+                            decoration: BoxDecoration(                          
+                              color: Colors.yellow[500],
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            child: new FlatButton(
+                              onPressed: () {},
+                              child: new Text(
+                                "All",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),                
+                            ),
                           ),
-                        ),
-                          
+                         ),
                       ),
-                    ),
+                       
+                      new Container(
+                        child: SizedBox(
+                          width: 75,
+                          height: 30,
+                          child: Container(
+                            margin: EdgeInsets.only(right: 5),
+                            decoration: BoxDecoration(                          
+                              color: Colors.yellow[400],
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            child: new FlatButton(
+                              onPressed: () {},
+                              child: new Text(
+                                "Jobs",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),                
+                            ),
+                          ),
+                         ),
+                      ),
 
-                    new Card(
-                      color: Colors.yellow[300],
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(200.0)),
-                      child: new FlatButton(
-                        minWidth: 85,
-                        height: 25,
-                        onPressed: null,
-                        child: new Text(
-                          "News",
-                          style: TextStyle(
-                            color: Colors.black,
+                      new Container(
+                        child: SizedBox(
+                          width: 80,
+                          height: 30,
+                          child: Container(
+                            margin: EdgeInsets.only(right: 5),
+                            decoration: BoxDecoration(                          
+                              color: Colors.yellow[300],
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            child: new FlatButton(
+                              onPressed: () {},
+                              child: new Text(
+                                "News",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),                
+                            ),
                           ),
-                        ),
-                          
+                         ),
                       ),
-                    ),
 
-                    new Card(
-                      color: Colors.yellow[100],
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(200.0)),
-                      child: new FlatButton(
-                        minWidth: 85,
-                        height: 25,
-                        onPressed: null,
-                        child: new Text(
-                          "Courses",
-                          style: TextStyle(
-                            color: Colors.black,
+                      new Container(
+                        child: SizedBox(
+                          width: 100,
+                          height: 30,
+                          child: Container(
+                            margin: EdgeInsets.only(right: 5),
+                            decoration: BoxDecoration(                          
+                              color: Colors.yellow[200],
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            child: new FlatButton(
+                              onPressed: () {},
+                              child: new Text(
+                                "Courses",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),                
+                            ),
                           ),
-                        ),
-                          
-                      ),
-                    ),
-                  ],
+                         ),
+                      ),                     
+                    ],
+                  ),
                 ),
-                ),
-                // SingleChildScrollView(
-                  //**********posts */
-                  // scrollDirection: Axis.horizontal,
-                  
-                  //  new Column(
-                  //   children: [
-                      //posts
-                      All(),
-                    // ],
-                  // ),
-                 
-              
-            // ),
+              Expanded(
+                child: 
+                SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: new Column(
+                      children: [
+                        All(),
+                      ],
+                    ),
+                ),    
+              ),
               ],
-          ),
-          
-          
-        
-
+            ),
+         ),
         // new SingleChildScrollView(
         // child:
-          
-    
-         ),
-      //Search
-      //Categories
+      //Search Done....
+      //Categories Done....
       //posts from APIs on cards
       //flat add icon
     );

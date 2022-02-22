@@ -1,3 +1,5 @@
+import 'package:apeye/Login_final.dart';
+import 'package:apeye/Registration.dart';
 import 'package:apeye/Select_interest.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,12 +16,12 @@ void main() async{
     ));
 }
 
-// class Go extends StatelessWidget {   
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: "Home",
-//       theme: ThemeData(
+class Go extends StatelessWidget {   
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Home",
+      // theme: ThemeData(
 //         primaryColor: Colors.yellow,
 //         textTheme: TextTheme(
 //           headline1: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
@@ -47,17 +49,19 @@ void main() async{
 
 
 
-//       routes: <String, WidgetBuilder>{
-//         "/InformOne" : (BuildContext context) => new checkbox(),
-//         "InformTwo" : (BuildContext context) => new Inform(),
-//         "/Final_Login" : (BuildContext context) => new Final_Login(),
-//         "/Registration" : (BuildContext context) => new Registration(),
-//         "/Login" : (BuildContext context) => new Some(),
-//       },
-//       home: Final_Login(),
-//     );
-//   }
-// }
+      routes: <String, WidgetBuilder>{
+        // "/InformOne" : (BuildContext context) => new checkbox(),
+        // "InformTwo" : (BuildContext context) => new Inform(),
+        "/Final_Login" : (BuildContext context) => new Final_Login(),
+        "/Registration" : (BuildContext context) => new Registration(),
+        "/Login" : (BuildContext context) => new Login_final(),
+        // "/Interest" : (BuildContext context) => new Select_interest(String email),
+
+      },
+      home: Final_Login(),
+    );
+  }
+}
 
 
 

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:apeye/Home.dart';
 import 'package:apeye/Inform.dart';
 import 'package:apeye/Registration.dart';
 import 'package:apeye/Select_interest.dart';
@@ -27,13 +28,6 @@ class Login extends State<Login_final>{
           children: [
             SizedBox(height: 100,),
             Image.asset("assets/images/welcome.jpg", height: 300,),
-            // Text("Login",
-            //   style: TextStyle(
-            //     color: Colors.green[800],
-            //     fontSize: 30,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            // ),
             Form(
               key: _formkey,
               child: Padding(
@@ -89,7 +83,7 @@ class Login extends State<Login_final>{
                      Navigator.push(
                         context,
                         new MaterialPageRoute(
-                          builder: (context) => new Inform(),
+                          builder: (context) => new Home(_email),
                         ),
                       );
                     }
