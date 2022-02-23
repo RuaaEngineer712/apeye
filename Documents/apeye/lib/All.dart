@@ -7,200 +7,225 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'Home.dart';
+import 'app_bar/configuration.dart';
+import 'package:intl/intl.dart';
+// import 'package:url_launcher/url_launcher.dart';
+
 
 class All extends StatefulWidget { 
   
   @override
   State<StatefulWidget> createState() {
+    //from APIs...
+    // _All().setAvatar("assets/images/test.jpg");
+    // _All().setName("Ruaa");
+    // _All().setDate(DateTime.now());
+    // _All().setDescription("here is description");
+    // _All().setLink("youtube.com");
+    
+
     return _All();
   }
 }
 
 class _All extends State<All>{
-    DatabaseUserManager data = new DatabaseUserManager();
+  DatabaseUserManager data = new DatabaseUserManager();
 
+  String avatar = '';
+  String name = '';
+  // // DateFormat year = DateFormat().add_y();
+  // int month = 2;
+  // int day = 23;
+
+  String image_url = '';
+
+  DateTime dateToday = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, DateTime.now().hour) ; 
+  String description = "";
+
+  String link = "";
+
+  String setAvatar(String getAvatar){
+    setState(() {
+      getAvatar = avatar;      
+    });
+    return getAvatar;
+  }
+
+  String setName(String getName){
+    setState(() {
+      getName = name;
+    });
+    return getName;
+  }
+
+  String imageUrl(String getImage){
+    setState(() {
+      getImage = image_url;
+    });
+    return getImage;
+  }
+
+  DateTime setDate(DateTime getDate){
+    setState(() {
+      getDate = dateToday;
+    });
+    return getDate;
+  }
+
+  String setDescription(String getdescription){
+    setState(() {
+      getdescription = description;
+    });
+    return getdescription;
+  }
+
+  String setLink(String getLink){
+    setState(() {
+      getLink = link;
+    });
+    return getLink;
+  }
+
+  // _All(this.image_url, this.name, this.dateToday, this.description, this.link);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-     child: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children : [
-            new Container(
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(top: 20),
-            // height: 360,
-             decoration: BoxDecoration(                       
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white
-             ),
-            child: new Column(
-              children: [
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        children: [
+          Container(          
+          child: GestureDetector(
+              child: Container(
+                height: 240,
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
                   children: [
-                    new Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 10, top: 10),
-                          child: CircleAvatar(backgroundColor: Colors.yellow,backgroundImage: ExactAssetImage('assets/images/welcome.jpg'),),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 10, top: 10),
-                          child: new Text(
-                            "Name",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
+                    Expanded(
+                      child: Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(color: Colors.lightBlue[900],
+                            borderRadius: BorderRadius.circular(20),
+                              boxShadow: shadowList,
                             ),
+                            margin: EdgeInsets.only(top: 50),
                           ),
-                        ), 
-                      ],     
-                    ),
-                    Container( 
-                      margin: EdgeInsets.only(right: 10),     
-                      // child: Expanded(
-                        child: Stack(                       
-                        children: <Widget>[          
-                          // Positioned(
-                            // right: 0.0,
-                            // top: 0.0,              
-                            PopupMenuButton( 
-                              
-                              
-                          //     onSelected: (menuVal) async {
-                          // // setState(() async{
-                          //   switch(menuVal){
-                          //     case 'save':{
-                          //       await data.save_post('JCmzvelIXAy15O0j4dlX','name');
-                          //       print(save);
-                          //     break;
-                          //     }        
-                            // }    
-                        // // },  
-                        // child: IconButton(
-                        //   onPressed: () {},
-                           icon: Icon(Icons.more_horiz,
-                           
-                          //  ),
-                        ),
+                          Align(
+                            // child: Hero(
+                            //     tag:1,child: Image.asset("assets/images/test.jpg"),
+                            // ),
+                          )
 
-                           itemBuilder: (context) =>[
-                             PopupMenuItem(
-                               child: Text("Save"),
-                               value: 1,
-                               onTap: () => {
-                                 onSelected(context, 1),
-                               },
-                             ),
-                             PopupMenuItem(
-                               child: Text("Share"),
-                               value: 2,
-                               onTap: () => {
-                                 onSelected(context, 2),
-                               },
-                             ),
-                           ],                                          
-                      ),                          
-                        
-                        ]
+                        ],
                       ),
-                    
-                    ),          
-                       
-                    
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(top: 60,bottom: 20),
+                        decoration: BoxDecoration(color: Colors.white,
+
+                        boxShadow: shadowList,
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20)
+
+                          )
+                        ),
+                        child: Column(
+                          // mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(child: 
+                                  new Row(
+                                    children: [
+                                      Padding(padding: EdgeInsets.only(left: 10)),
+                                      CircleAvatar(backgroundImage: ExactAssetImage("assets/images/test.jpg")),
+                                      SizedBox(width: 10,),
+                                      // Column(
+                                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                                      //   children: [
+                                          Text("Ruaa",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                          // Expanded(child: Row(
+                                          //   children: [
+                                          //     Text(
+                                          //       DateFormat.YEAR,
+                                          //       style: TextStyle(color: Colors.grey,fontSize: 10,fontWeight: FontWeight.bold)),
+                                          //       Text( "." ),
+                                          //       Text(
+                                          //         DateFormat.MONTH,
+                                          //         style: TextStyle(color: Colors.grey,fontSize: 10,fontWeight: FontWeight.bold)),
+                                          //       Text( "." ),
+                                          //       Text(
+                                          //         DateFormat.DAY,
+                                          //         style: TextStyle(color: Colors.grey,fontSize: 10,fontWeight: FontWeight.bold)),
+                                          //       Text( "." ),
+                                          //       Text(
+                                          //         DateFormat.HOUR,
+                                          //         style: TextStyle(color: Colors.grey,fontSize: 10,fontWeight: FontWeight.bold)),
+                                          //       Text( "." ),
+                                          //   ],
+                                          // ),  
+                                          // ),
+                                      //   ],
+                                      // ),
+                                    ],
+                                  ),
+                                  ),                                  
+                                  Container( 
+                                    margin: EdgeInsets.only(right: 10),     
+                                    child: Stack(                       
+                                      children: <Widget>[          
+                                        PopupMenuButton( 
+                                          icon: Icon(Icons.more_horiz,),
+                                          itemBuilder: (context) =>[
+                                            PopupMenuItem(
+                                              child: Text("Save"),
+                                              value: 1,
+                                              onTap: () => {
+                                                onSelected(context, 1),
+                                              },
+                                            ),
+                                            PopupMenuItem(
+                                              child: Text("Share"),
+                                              value: 2,
+                                              onTap: () => {
+                                                onSelected(context, 2),
+                                              },
+                                            ),
+                                          ],                                          
+                                        ),                                                                
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            Container(                                    
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(padding: EdgeInsets.only(left: 0, top: 20)),
+                                  Text('Description:',style: TextStyle(color: Colors.black, fontSize: 11,fontWeight: FontWeight.bold),),
+                                  Text("getdescription",style: TextStyle(color: Colors.grey,fontSize: 8,)),                                      
+                                ],  
+                              ),  
+                            ),
+                          ],
+                        ),
+                      ), 
+                    )
                   ],
                 ),
-                
-                Container(
-                  margin: EdgeInsets.only(top: 10),                    
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(bottom: 30),
-                        child: new Text("Here is  the post \n from user"),
-                      ),
-                      Container(
-                        // child : Image.asset("assets/images/Engineer.PNG", height: MediaQuery.of(context).size.height-660,),
-                      ),                    
-                    ],
-                  ),    
-                ), 
-              ],
+              ),
             ),
           ),
-
-          Container(         
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(top: 20),
-             decoration: BoxDecoration(                       
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white
-             ),
-            child: new Column(
-              children: [
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    new Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: 10, top: 10),
-                          child: CircleAvatar(backgroundColor: Colors.yellow,backgroundImage: ExactAssetImage('assets/images/Engineer.PNG')),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 10, top: 10),
-                          child: new Text(
-                            "Name",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),                                
-                      ],     
-                    ),
-                    Container(
-                        margin: EdgeInsets.only(right: 10),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.more_horiz),
-                        ),
-                    ),
-                  ],
-                ),                                                  
-               Container(
-                    
-                    margin: EdgeInsets.only(top: 10),                            
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,                                
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(bottom: 30),
-                          child: new Text("Here is  the post \n from user"),
-                        ),                                                                    
-                        Container(
-                          child: Image.asset("assets/images/search.png",  height: MediaQuery.of(context).size.height-560),
-                        ),
-                        
-                      ],                                
-                    ),  
-                  ), 
-                              
-              ],
-            ),
-          ),
-          ], 
-          
-
-          
-         
-        ),
-      ), 
+        ],
+      ),
     );
-    
   }
   void onSelected(BuildContext context, int item) async{
      switch(item){

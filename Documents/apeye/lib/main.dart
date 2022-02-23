@@ -1,8 +1,12 @@
+import 'package:apeye/Home.dart';
 import 'package:apeye/Login_final.dart';
 import 'package:apeye/Registration.dart';
 import 'package:apeye/Select_interest.dart';
+import 'package:apeye/app_bar/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'MyTheme.dart';
+import 'app_bar/drawerScreen.dart';
 import 'firebase_options.dart';
 import 'package:apeye/Welcome.dart';
 
@@ -12,15 +16,37 @@ void main() async{
      options: DefaultFirebaseOptions.currentPlatform,
     );
   runApp(new MaterialApp(
-      home: Final_Login(),
+      home: HomePage(),
     ));
 }
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final text = MediaQuery.of(context).platformBrightness == Brightness.dark ? 'DarkTheme' : 'LightTheme';
+    return Scaffold(
+      body: Stack(
+        children: [
+          DrawerScreen(),
+          HomeScreen(),
+    
+        ],
+      ),
+
+    );
+  }
+}
+
 
 class Go extends StatelessWidget {   
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Home",
+      
+      // themeMode: ThemeMode.system,
+      theme: MyThemes.lightTheme,
+      darkTheme: MyThemes.darkTheme,
       // theme: ThemeData(
 //         primaryColor: Colors.yellow,
 //         textTheme: TextTheme(
@@ -48,7 +74,6 @@ class Go extends StatelessWidget {
 
 
 
-
       routes: <String, WidgetBuilder>{
         // "/InformOne" : (BuildContext context) => new checkbox(),
         // "InformTwo" : (BuildContext context) => new Inform(),
@@ -59,6 +84,7 @@ class Go extends StatelessWidget {
 
       },
       home: Final_Login(),
+      
     );
   }
 }

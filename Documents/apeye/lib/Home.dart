@@ -6,29 +6,34 @@ import 'Menu.dart';
 
 class Home extends StatelessWidget {    
   String email;
-      Home(this.email);
+  
+  Home(this.email);
+  
       
 
   @override
   Widget build(BuildContext context) {    
     return Scaffold(
-      drawer: 
-      IconButton(
-                        onPressed: null,
-                        icon: Icon(Icons.menu),
-                        // color: Colors.grey[800],  light mode
-                        color: Colors.grey[350],
-
-                      ),
       // backgroundColor: Colors.black12,
+
+        
+      
       body:
+      
          new Container(
             //row one
             
             child: new Column(
             
               children: [
-            
+                
+                // IconButton(
+                //         onPressed: null,
+                //         icon: Icon(Icons.menu),
+                //         // color: Colors.grey[800],  light mode
+                //         color: Colors.grey[350],
+
+                //       ),
                 SizedBox(height: 30,),
                 
                 new Row(
@@ -36,13 +41,13 @@ class Home extends StatelessWidget {
 
                   children: [
                           
-                      IconButton(
-                        onPressed: null,
-                        icon: Icon(Icons.menu),
-                        // color: Colors.grey[800],  light mode
-                        color: Colors.grey[350],
+                      // IconButton(
+                      //   onPressed: null,
+                      //   icon: Icon(Icons.menu),
+                      //   // color: Colors.grey[800],  light mode
+                      //   color: Colors.grey[350],
 
-                      ),
+                      // ),
                     
 
                     new Row(
@@ -241,6 +246,17 @@ class Home extends StatelessWidget {
               ],
             ),
          ),
+         drawer: Drawer(
+        child: Container(
+          // child: Column(
+            // children: [
+              // icon: Icons.menu,
+              child: Menu(),
+            // ],
+          // ),
+        ),
+      ),
+      
         // new SingleChildScrollView(
         // child:
       //Search Done....

@@ -11,7 +11,7 @@ import 'Select_interest.dart';
 class Menu extends StatelessWidget {    
   @override
   Widget build(BuildContext context) {
-    return Drawer(
+    return Container(
       child: new ListView(
         children: [
           ClipPath(
