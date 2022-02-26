@@ -8,10 +8,8 @@ class about_us extends StatelessWidget{
         children: [
           new Text("Email: "),
           // new Link( ),
-
         ],
       )
     );
   }
-  
 }

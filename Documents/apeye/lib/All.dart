@@ -1,18 +1,14 @@
 import 'dart:math';
 
-import 'package:apeye/API/model/job.dart';
-import 'package:apeye/Login_final.dart';
-import 'package:apeye/menuitem.dart';
-import 'package:apeye/services/auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '/API/model/job.dart';
+import '/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:meta/meta.dart';
-import 'Home.dart';
 import 'app_bar/configuration.dart';
 import 'package:intl/intl.dart';
 
-import 'package:apeye/API/model/load_data.dart';
+import '/API/model/load_data.dart';
 
 
 // import 'package:url_launcher/url_launcher.dart';
@@ -122,7 +118,6 @@ class _All extends State<All>{
                             //     tag:1,child: Image.asset("assets/images/test.jpg"),
                             // ),
                           )
-
                         ],
                       ),
                     ),
@@ -135,51 +130,23 @@ class _All extends State<All>{
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(20),
                             bottomRight: Radius.circular(20)
-
                           )
                         ),
                         child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(child: 
-                                  new Row(
-                                    children: [
-                                      Padding(padding: EdgeInsets.only(left: 10)),
-                                      CircleAvatar(backgroundImage: ExactAssetImage("assets/images/test.jpg")),
-                                      SizedBox(width: 10,),
-                                      // Column(
-                                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                                      //   children: [
-                                          Text('title',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-                                          // Expanded(child: Row(
-                                          //   children: [
-                                          //     Text(
-                                          //       DateFormat.YEAR,
-                                          //       style: TextStyle(color: Colors.grey,fontSize: 10,fontWeight: FontWeight.bold)),
-                                          //       Text( "." ),
-                                          //       Text(
-                                          //         DateFormat.MONTH,
-                                          //         style: TextStyle(color: Colors.grey,fontSize: 10,fontWeight: FontWeight.bold)),
-                                          //       Text( "." ),
-                                          //       Text(
-                                          //         DateFormat.DAY,
-                                          //         style: TextStyle(color: Colors.grey,fontSize: 10,fontWeight: FontWeight.bold)),
-                                          //       Text( "." ),
-                                          //       Text(
-                                          //         DateFormat.HOUR,
-                                          //         style: TextStyle(color: Colors.grey,fontSize: 10,fontWeight: FontWeight.bold)),
-                                          //       Text( "." ),
-                                          //   ],
-                                          // ),  
-                                          // ),
-                                      //   ],
-                                      // ),
-                                    ],
-                                  ),
+                                    new Row(
+                                      children: [
+                                        Padding(padding: EdgeInsets.only(left: 10)),
+                                        CircleAvatar(backgroundImage: ExactAssetImage("assets/images/test.jpg")),
+                                        SizedBox(width: 10,),
+                                          Text('title',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),                                          
+                                      ],
+                                    ),
                                   ),                                  
                                   Container( 
                                     margin: EdgeInsets.only(right: 10),     

@@ -47,12 +47,47 @@ Future<bool> register(String email, String password) async{
   }
 }
 
-Future<bool> updateProfile(String old, String email, String password) async{
+
+
+
+class DatabaseUserManager {
+
+  final _FirebaseAuth = FirebaseAuth.instance;
+
+  final CollectionReference Interests = FirebaseFirestore.instance.collection('Users');
+    final CollectionReference posts = FirebaseFirestore.instance.collection('SavedPost_test');
+
+    final CollectionReference test = FirebaseFirestore.instance.collection('Interest_test');
+
+Future<void> logout() async{
+  try {
+    await FirebaseAuth.instance.signOut();
+  }
+  catch(e){
+    print(e.toString());
+  }
+}
+
+Future<void> userData(String email, Map<String , String> interest) async{
+  try{    
+    await Interests.doc().set({
+      "email" : email ,
+      "interest" : interest
+    }, SetOptions(merge: true),
+    );
+  }   
+  catch(e){
+    print(e.toString());
+  }
+}
+
+Future<bool> updateProfile(String old, String email, String password , Map<String , String> interest) async{
   try{
       
-      final CollectionReference Interests = FirebaseFirestore.instance.collection('Users');
       FirebaseAuth.instance.currentUser?.updateEmail(email);
-      FirebaseAuth.instance.currentUser?.updatePassword(password);
+      if (!password.isEmpty){
+        FirebaseAuth.instance.currentUser?.updatePassword(password);
+      }
 
       // Future<DocumentSnapshot<Object?>> user =  Interests.doc(old).get();  
 
@@ -60,7 +95,8 @@ Future<bool> updateProfile(String old, String email, String password) async{
 
       for (var doc in querySnapshot.docs) {
         await Interests.doc(doc.id).update({
-          'email' : email
+          'email' : email,
+          "interest" : interest
         });
       }
 
@@ -86,33 +122,22 @@ Future<bool> updateProfile(String old, String email, String password) async{
 }
 
 
-
-class DatabaseUserManager {
-
-  final _FirebaseAuth = FirebaseAuth.instance;
-
-  final CollectionReference Interests = FirebaseFirestore.instance.collection('Users');
-    final CollectionReference posts = FirebaseFirestore.instance.collection('SavedPost_test');
-
-    final CollectionReference test = FirebaseFirestore.instance.collection('Interest_test');
-
-Future<void> logout() async{
-  try {
-    await FirebaseAuth.instance.signOut();
-  }
-  catch(e){
-    print(e.toString());
-  }
-}
-
-Future<void> userData(String email, Array interest) async{
+Future<void> updateInterest(String email, Map<String , String> interest) async{
   try{
-    
-    await Interests.doc().set({email : email , interest: interest});
-  }   
+
+      
+
+      final querySnapshot = await Interests.where('email' , isEqualTo: email).get();
+      for (var doc in querySnapshot.docs) {
+        await Interests.doc(doc.id).update({
+          'interest' : interest
+        });
+      }
+  }
   catch(e){
     print(e.toString());
   }
+
 }
 
 Future<void> save_post(String id, String name) async{
