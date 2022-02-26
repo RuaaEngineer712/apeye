@@ -1,19 +1,26 @@
 import 'dart:math';
 
+import 'package:apeye/API/model/job.dart';
 import 'package:apeye/Login_final.dart';
 import 'package:apeye/menuitem.dart';
 import 'package:apeye/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:meta/meta.dart';
 import 'Home.dart';
 import 'app_bar/configuration.dart';
 import 'package:intl/intl.dart';
+
+import 'package:apeye/API/model/load_data.dart';
+
+
 // import 'package:url_launcher/url_launcher.dart';
 
 
 class All extends StatefulWidget { 
-  
+  // late Jobs jobs;
+  // All({Key? key, required Jobs Jobs}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     //from APIs...
@@ -147,7 +154,7 @@ class _All extends State<All>{
                                       // Column(
                                       //   crossAxisAlignment: CrossAxisAlignment.start,
                                       //   children: [
-                                          Text("Ruaa",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                          Text('title',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
                                           // Expanded(child: Row(
                                           //   children: [
                                           //     Text(
@@ -210,7 +217,7 @@ class _All extends State<All>{
                                 children: [
                                   Padding(padding: EdgeInsets.only(left: 0, top: 20)),
                                   Text('Description:',style: TextStyle(color: Colors.black, fontSize: 11,fontWeight: FontWeight.bold),),
-                                  Text("getdescription",style: TextStyle(color: Colors.grey,fontSize: 8,)),                                      
+                                  Text("Description",style: TextStyle(color: Colors.grey,fontSize: 8,)),                                      
                                 ],  
                               ),  
                             ),

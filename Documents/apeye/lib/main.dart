@@ -3,14 +3,21 @@ import 'package:apeye/Login_final.dart';
 import 'package:apeye/Registration.dart';
 import 'package:apeye/Select_interest.dart';
 import 'package:apeye/app_bar/HomeScreen.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'MyTheme.dart';
+import 'package:apeye/API/model/job.dart';
 import 'app_bar/drawerScreen.dart';
-import 'firebase_options.dart';
 import 'package:apeye/Welcome.dart';
 
+import 'package:flutter/material.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+
+import 'MyTheme.dart';
+
+import 'firebase_options.dart';
+
+
 void main() async{
+  
   WidgetsFlutterBinding.ensureInitialized();
      await Firebase.initializeApp(
      options: DefaultFirebaseOptions.currentPlatform,
@@ -21,14 +28,20 @@ void main() async{
 }
 
 class HomePage extends StatelessWidget {
+  // late Jobs jobs;
+  // email
   @override
   Widget build(BuildContext context) {
     final text = MediaQuery.of(context).platformBrightness == Brightness.dark ? 'DarkTheme' : 'LightTheme';
     return Scaffold(
       body: Stack(
         children: [
-          DrawerScreen(),
-          HomeScreen(),
+          
+          // DrawerScreen(''),
+          Login_final()
+          // HomeScreen('Noon@gmail.com'),
+          
+          // Login_final(),
     
         ],
       ),

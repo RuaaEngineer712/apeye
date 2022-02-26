@@ -1,11 +1,19 @@
+import 'package:apeye/API/model/job.dart';
+import 'package:apeye/API/model/load_data.dart';
+import 'package:apeye/app_bar/drawerScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../All.dart';
 import 'configuration.dart';
-import 'package:apeye/Home.dart';
+import '/Home.dart';
+
 
 class HomeScreen extends StatefulWidget {
-  String email = "";
+  String email;
+  HomeScreen(this.email);
+  // late Jobs jobs;
+  // HomeScreen(Set<Object> set, {Key? key, required String email}) : super(key: key);
+  
   @override
   _HomeScreenState createState() => _HomeScreenState(email);
 }
@@ -13,6 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   String email;
+  // Jobs jobs;
   _HomeScreenState(this.email);
 
   double xOffset = 0;
@@ -23,8 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   @override
-  Widget build(BuildContext context) {
-    return AnimatedContainer(
+
+    Widget build(BuildContext context) {
+    final text = MediaQuery.of(context).platformBrightness == Brightness.dark ? 'DarkTheme' : 'LightTheme';
+    return Scaffold(
+      backgroundColor: Colors.blueGrey, 
+      body: Stack(
+        children: [
+          
+          DrawerScreen(email),
+          AnimatedContainer(
       transform: Matrix4.translationValues(xOffset, yOffset, 0)
         ..scale(scaleFactor)..rotateY(isDrawerOpen? -0.5:0),
       duration: Duration(milliseconds: 250),
@@ -136,7 +153,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }
             ),
-            
           ),
           // Container(
           //   child: ListView.builder(
@@ -162,6 +178,22 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+     ),
+          // HomeScreen('Noon@gmail.com'),
+          
+          // Login_final(),
+    
+        ],
+      ),
+
     );
-  }
+
+    // return Scaffold(
+      
+    //  body: 
+    // );
+  // }
+
+    // );
+    }
 }

@@ -3,6 +3,7 @@ import 'package:apeye/Home.dart';
 import 'package:apeye/Inform.dart';
 import 'package:apeye/Registration.dart';
 import 'package:apeye/Select_interest.dart';
+import 'package:apeye/app_bar/HomeScreen.dart';
 import 'package:apeye/services/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -83,7 +84,7 @@ class Login extends State<Login_final>{
                      Navigator.push(
                         context,
                         new MaterialPageRoute(
-                          builder: (context) => new Home(_email),
+                          builder: (context) => new HomeScreen(_email),
                         ),
                       );
                     }

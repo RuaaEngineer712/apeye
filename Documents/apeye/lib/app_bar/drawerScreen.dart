@@ -1,16 +1,27 @@
+import 'package:apeye/Login_final.dart';
 import 'package:flutter/material.dart';
 import 'configuration.dart';
+import '/Profile.dart';
+import '/about_us.dart';
+import 'package:apeye/services/auth.dart';
 
 class DrawerScreen extends StatefulWidget {
+  String email;
+  DrawerScreen(this.email);
+
   @override
-  _DrawerScreenState createState() => _DrawerScreenState();
+  _DrawerScreenState createState() => _DrawerScreenState(email);
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+  DatabaseUserManager data = new DatabaseUserManager();
   int onClick = 0;
+  String email;
+  _DrawerScreenState(this.email);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+    body: Container(
       color: Colors.blueGrey[900],
       padding: EdgeInsets.only(top:50,bottom: 70,left: 10),
       child: Column(
@@ -24,33 +35,65 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('User Name',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-                  Text('email@gmail.com',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))
+                  Text(email,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))
                 ],
               )
             ],
           ),
-          InkWell(
-            onTap: () => {
-              onClick++,
-              
-            },
-            child: Column(
+          
+           Column(
             
-            children: 
-            drawerItems.map(              
+            children:  
+            drawerItems.map(     
+                       
               (element) => Padding(                
-                padding: const EdgeInsets.all(8.0),                
-                child: Row(
-                  children: [                    
-                    Icon(element['icon'],color: Colors.white,size: 30,),
-                    SizedBox(width: 10,),
-                    Text(element['title'],style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20))
-                  ],
+                padding: const EdgeInsets.all(8.0),   
+                child: InkWell(
+                          child: Row(
+                            children: [    
+                                  
+                              Icon(element['icon'],color: Colors.white,size: 30,),
+                              SizedBox(width: 10,),
+                              Text(element['title'],style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20))
+                            ],
 
-                ),
+                          ),
+                          onTap: () => {
+                            print(element),
+                        // getElement('profile'), 
+                            if(element['title'] == 'profile'){
+                              Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                  builder: (context) =>  Profile(email),
+                                ),
+                            ),
+                          }
+                          else if(element['title'] == 'about us'){
+                            Navigator.push(
+                                context,
+                                new MaterialPageRoute(
+                                  builder: (context) =>  about_us(),
+                                ),
+                            ),
+                          }
+                          else if(element['title'] == 'log out'){
+                            data.logout(),
+                             Navigator.pushReplacement(
+                                context,
+                                new MaterialPageRoute(
+                                  builder: (context) =>  Login_final(),
+                                ),
+                            ),
+
+                          }
+                        
+                        },         
+                      ),             
+                
             )).toList(),
           ),  
-          ),
+          // ),
           
 
           Row(
@@ -71,7 +114,26 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
         ],
       ),
-
+    ),
     );
+  }
+
+  void getElement(String element){
+    switch(element){
+      case 'profile': {
+        
+        break;
+      }
+
+      // case 'about us': {
+      //   Navigator.push(
+      //     context,
+      //     new MaterialPageRoute(
+      //       builder: (context) =>  About_us(),
+      //     ),
+      //   );
+      //   break;
+      // }
+    }
   }
 }

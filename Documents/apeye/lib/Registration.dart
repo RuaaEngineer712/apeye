@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:apeye/Inform.dart';
 import 'package:apeye/Login_final.dart';
 import 'package:apeye/Select_interest.dart';
+import 'package:apeye/Welcome.dart';
 import 'package:apeye/services/auth.dart';
 import 'package:apeye/ui/Some.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

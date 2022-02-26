@@ -2,30 +2,48 @@ import 'dart:ffi';
 
 import 'package:apeye/Home.dart';
 import 'package:apeye/Inform.dart';
+import 'package:apeye/app_bar/HomeScreen.dart';
 import 'package:apeye/services/auth.dart';
 import 'Registration.dart';
 import 'package:apeye/main.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Select_interest extends StatelessWidget {    
-  
+class Select_interest extends StatefulWidget {    
   String email;
   Select_interest(this.email);
+  @override
+  State<StatefulWidget> createState() {
+    return _Select(email);
+  }
+}
+class _Select extends State<Select_interest> {
+  
+  String email;
+  
+  _Select(this.email);
 
+  
+  // int onCLick;
+  
 
-  int onCLick = 0;
-
+  
   CollectionReference Interests = FirebaseFirestore.instance.collection("Users");
   DatabaseUserManager data = new DatabaseUserManager();
-
+ 
   final Stream<QuerySnapshot> users = FirebaseFirestore.instance.collection('Users').snapshots();
   
   
   
   @override
   Widget build(BuildContext context) {
-    
+    var arr;
+    var onClick;
+    void getInterest(int click){
+      setState(() {
+        onClick = click;
+      });
+    }
     return Scaffold(
       body: SingleChildScrollView (
         child: Column(
@@ -66,11 +84,13 @@ class Select_interest extends StatelessWidget {
                           height: 100,                                      
                           child: Card( 
                             child: InkWell(  
-                              onTap: () async => {     
-                                 onCLick = 1,
-                                 if(onCLick == 1){
-                                  //  await Interests.add('enterest1': 'Engineer', '':'', '':'', '':''), 
-                                   await data.userData("${email}", 'Engineer')
+                              onTap: () async => {    
+                                getInterest(1),                               
+                                 if(onClick == 1){
+                                   setState(() {
+                                    arr = 'Engineer';
+                                   }),
+                                  // await data.userData("${email}", arr[0])
                                  }
                                             
                               },
@@ -94,8 +114,14 @@ class Select_interest extends StatelessWidget {
                           child: Card( 
                             child: InkWell(
                               onTap: () async => {
-                                onCLick = 2,
-                                await data.userData("${email}", "ComputerScience") 
+                                getInterest(2), 
+                                if(onClick == 2){
+                                   setState(() {
+                                    arr[1] = 'Computer science';
+                                   }),
+                                  // await data.userData("${email}", arr[0])
+                                 }
+                                
                               },
                               child: Center(  
                                 child: Text(                   
@@ -123,8 +149,14 @@ class Select_interest extends StatelessWidget {
                             child: Card( 
                               child: InkWell(
                                 onTap: () async => {
-                                   onCLick = 3,
-                                  await data.userData("${email}", "Management") 
+                                   getInterest(3), 
+                                   if(onClick == 3){
+                                   setState(() {
+                                    arr[2] = 'Management';
+                                   }),
+                                  // await data.userData("${email}", arr[0])
+                                 }
+                                  
                                 },
                                 child: Center(  
                                   child: Text(                   
@@ -147,9 +179,13 @@ class Select_interest extends StatelessWidget {
                           child: Card(
                             child: InkWell(
                               onTap: () async => {
-                                onCLick = 4,
-                                
-                                await data.userData("${email}", "Marketing") 
+                                getInterest(4), 
+                                if(onClick == 4){
+                                   setState(() {
+                                    arr[3] = 'Marketing';
+                                   }),
+                                  // await data.userData("${email}", arr[0])
+                                 }
                               },
                               child: Center(                                
                                 child: Text(                                            
@@ -184,15 +220,17 @@ class Select_interest extends StatelessWidget {
                         fontSize: 18,
                       ),
                     ),
-                    onPressed: () {
-                      if(onCLick == 0){
-                        print("****************" + onCLick.toString());
+                    onPressed: () async{
+
+                      if(onClick == 0){
+                        print("****************" + onClick.toString());
                       }
                       else{
+                        await data.userData(email, arr);
                         Navigator.push(
                           context,
                           new MaterialPageRoute(
-                            builder: (context) => new Home(email),
+                            builder: (context) => new HomeScreen(email),
                           ),
                         );
                       }                   
@@ -205,7 +243,11 @@ class Select_interest extends StatelessWidget {
       )     
     );
   }
+
 }
+  
+  
+
 
 class myClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
