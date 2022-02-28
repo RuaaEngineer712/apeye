@@ -3,7 +3,7 @@ import 'package:apeye/Login_final.dart';
 import 'package:apeye/Registration.dart';
 import 'package:apeye/Select_interest.dart';
 import 'package:apeye/app_bar/HomeScreen.dart';
-import 'package:apeye/API/model/job.dart';
+import 'package:apeye/API/model/News.dart';
 import 'app_bar/drawerScreen.dart';
 import 'package:apeye/Welcome.dart';
 

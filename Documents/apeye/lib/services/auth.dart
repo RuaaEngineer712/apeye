@@ -7,7 +7,7 @@
 
 import 'dart:ffi';
 
-import 'package:apeye/API/model/job.dart';
+import 'package:apeye/API/model/News.dart';
 import 'package:apeye/app_bar/HomeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

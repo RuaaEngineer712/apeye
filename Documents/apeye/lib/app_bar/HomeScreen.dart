@@ -1,5 +1,7 @@
-// import 'package:apeye/API/model/job.dart';
-// import 'package:apeye/API/model/load_data.dart';
+
+import 'package:apeye/view_models/APIs/news_view_model.dart';
+import 'package:provider/provider.dart';
+
 import 'drawerScreen.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     Widget build(BuildContext context) {
     final text = MediaQuery.of(context).platformBrightness == Brightness.dark ? 'DarkTheme' : 'LightTheme';
-    return Scaffold(
+    return 
+    ChangeNotifierProvider<News_view_model>(
+      create: (context) => News_view_model(),
+      child: Scaffold(
       backgroundColor: Colors.blueGrey, 
       body: Stack(
         children: [
@@ -137,17 +142,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     ),
                   ),
-                  for (var i = 0; i < 10; i++) (
-                    Container(
-                      child: All(),
-                    )
-                  ),            
+                  // for (var i = 0; i < 10; i++) (
+                  // ChangeNotifierProvider<News_view_mode>(
+                  //   create: (_) => News_view_mode(),
+                    All(),
+                  //   )
+                  // ),            
                 ],
               ),
             ),
           ),
         ],
       ),
+    )
     );
   }
 }
