@@ -27,13 +27,25 @@ class _HomeScreenState extends State<HomeScreen> {
   double scaleFactor = 1;
 
   bool isDrawerOpen = false;
+  bool clicked= false;
+
+  Future<void> _refresh(){
+    return Future.delayed(
+      Duration(seconds: 0)
+    );
+  }
   @override
 
     Widget build(BuildContext context) {
     final text = MediaQuery.of(context).platformBrightness == Brightness.dark ? 'DarkTheme' : 'LightTheme';
+    String element = '';
+    
     return 
     ChangeNotifierProvider<News_view_model>(
       create: (context) => News_view_model(),
+      child: RefreshIndicator(
+          edgeOffset: 0,
+          onRefresh: _refresh,
       child: Scaffold(
       backgroundColor: Colors.blueGrey, 
       body: Stack(
@@ -126,14 +138,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                   boxShadow: shadowList,
                                   borderRadius: BorderRadius.circular(10)
                                 ),
-                                child:Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Image.asset(categories[index]['iconPath'],
-                                    height: 30,
-                                    width: 50,),
-                                    Text(categories[index]['name']),
-                                  ],
+                                child: InkWell(
+                                  child:Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Image.asset(categories[index]['iconPath'],
+                                      height: 30,
+                                      width: 50,),
+                                      Text(categories[index]['name']),
+                                    ],
+                                  ),
+                                  onTap:() => {
+                                    element = categories[index]['name'].toString(),
+                                    if(element == "News"){
+                                      print(element),
+                                      setState(() {
+                                        clicked = true;
+                                      })
+                                    }
+                                    else{
+                                      clicked = false,
+                                    }
+                                    
+                                      // new Container(
+                                        // child: All(),
+                                      // ),
+                                    }
+                                  // }
                                 ), 
                               ),
                             ],
@@ -145,7 +176,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   // for (var i = 0; i < 10; i++) (
                   // ChangeNotifierProvider<News_view_mode>(
                   //   create: (_) => News_view_mode(),
-                    All(),
+                  Visibility(
+                    visible: clicked,
+                    child: All(),
+                  )
+                    
                   //   )
                   // ),            
                 ],
@@ -154,7 +189,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-    )
+    ),
+      ),
     );
   }
 }
