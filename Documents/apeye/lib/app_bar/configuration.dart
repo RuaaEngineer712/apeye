@@ -30,10 +30,11 @@ List<Map> drawerItems=[
     'icon': Icons.person,
     'title' : 'profile'
   },
-  // {
-  //   'icon': Icons.settings,
-  //   'title' : 'setting'
-  // },
+
+  {
+    'icon': Icons.save,
+    'title' : 'Saved content'
+  },
 
   {
     'icon': Icons.mail,

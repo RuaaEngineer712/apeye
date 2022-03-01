@@ -234,12 +234,12 @@ class _Profile extends State<Profile>{
                 // children: [
                   SizedBox(width: 150,),
                   RaisedButton(
-                    color: Colors.black,
+                    color: Colors.blue[900],
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                     child: Text(
-                      "Next",
+                      "Update",
                       style: TextStyle(
-                        color: Colors.lightBlue,
+                        color: Colors.white,
                         fontSize: 18,
                       ),
                     ),

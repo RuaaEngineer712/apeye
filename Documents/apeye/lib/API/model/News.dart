@@ -17,7 +17,7 @@ class News {
     print("\n");
     return News(
       title: jsonData['title'],
-      description: jsonData['description'],
+      description: jsonData['description'] != null ? jsonData['description'] : 'description',
       imageUrl: jsonData['urlToImage'] != null ? jsonData['urlToImage'] : '',
       articleUrl: jsonData['url'],
       date: jsonData['publishedAt'],

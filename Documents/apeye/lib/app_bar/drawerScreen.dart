@@ -1,3 +1,5 @@
+import 'package:apeye/Saved_content.dart';
+
 import '/Login_final.dart';
 import 'package:flutter/material.dart';
 import 'configuration.dart';
@@ -61,6 +63,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         context,
                         new MaterialPageRoute(
                           builder: (context) =>  Profile(email),
+                        ),
+                      ),
+                    }
+                    else if(element['title'] == 'Saved content'){
+                        Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                          builder: (context) =>  Saved_content(),
                         ),
                       ),
                     }
