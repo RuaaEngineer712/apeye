@@ -24,23 +24,25 @@ class SavedDatabase{
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return openDatabase(path, version: 2, onCreate: _creatDB);
+    return openDatabase(path, version: 5, onCreate: _creatDB);
   }
 
   Future _creatDB(Database db, int version) async{
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    await db.execute('drop table saved_content');
     final textType = 'TEXT NOT NULL';
-    // await db.execute('''
-    //   CREATE TABLE $tableSaved (
-    //     ${Saved_field.id} $idType,
-    //     ${Saved_field.image} $textType,
-    //     ${Saved_field.title} $textType,
-    //     ${Saved_field.date} $textType,
-    //     ${Saved_field.description} $textType,
-    //   )'''
-    // );
-    String sql = 'CREATE TABLE saved_content(name, image, title, date, description)';
-    await db.execute(sql);
+    await db.execute('''
+      CREATE TABLE $tableSaved (
+        id INTEGER PRIMARY KEY,
+        ${Saved_field.id} $idType,
+        ${Saved_field.image} $textType,
+        ${Saved_field.title} $textType,
+        ${Saved_field.date} $textType,
+        ${Saved_field.description} $textType,
+      )'''
+    );
+    // String sql = 'CREATE TABLE saved_content(name, image, title, date, description)';
+    // await db.execute(sql);
   }
 
   Future<Saved_content_model> create(Saved_content_model saved_content) async{
@@ -53,24 +55,25 @@ class SavedDatabase{
     // final id = await db.rawInsert('INSERT INTO saved_content ($columns) VALUES ($values)');
 
     final id = await db.insert(tableSaved, saved_content.toJson());
-    return saved_content.copy(name: id.toString());
+    print('***************'"");print(id);
+    return saved_content.copy(id: id);
   }
 
-  Future<Saved_content_model> readContenet(String name) async{
+  Future<Saved_content_model> readContenet(int id) async{
     final db = await instance.database;
 
     final maps = await db.query(
       tableSaved,
       columns: Saved_field.values,
-      where: '${Saved_field.name} = ? ',
-      whereArgs: [name],
+      where: '${Saved_field.id} = ? ',
+      whereArgs: [id],
     );
 
     if(maps.isNotEmpty){
       return Saved_content_model.fromJson(maps.first);
     }
     else{
-      throw Exception('name $name not found');
+      throw Exception('name $id not found');
     }
   }
 
@@ -87,13 +90,13 @@ class SavedDatabase{
     
   }
 
-  Future<int> delete(String name) async{
+  Future<int> delete(int id) async{
     final db = await instance.database;
 
     return await db.delete(
       tableSaved,
-      where: '${Saved_field.name} = ?',
-      whereArgs: [name],
+      where: '${Saved_field.id} = ?',
+      whereArgs: [id],
       );
   }
 

@@ -4,11 +4,11 @@ final String tableSaved = 'saved_content';
 
 class Saved_field{
   static final List<String> values = [
-    name, image, title, date, description
+    id, image, title, date, description
   ];
 
 
-  static final String name = 'name';
+  static final String id = 'id';
   static final String image = 'image';
   static final String title = 'title';
   static final String date = 'date';
@@ -20,14 +20,14 @@ class Saved_field{
 
 
 class Saved_content_model{
-  final String name;
+  int id;
   final String image;
   final String title;
   final String date;
   final String description;
 
-  const Saved_content_model({
-    required this.name,
+   Saved_content_model({
+    required this.id,
     required this.image,
     required this.title,
     required this.date,
@@ -35,16 +35,16 @@ class Saved_content_model{
   });
 
   Saved_content_model copy({
-    String? name,
+     int? id,
     final String? image,
     final String? title,
     final String? date,
     final String? description,
   }) =>
-    Saved_content_model(name: this.name,image: this.image, title: this.title, date: this.date, description: this.description);
+    Saved_content_model(id: this.id,image: this.image, title: this.title, date: this.date, description: this.description);
   
   static Saved_content_model fromJson(Map<String, Object?> json) => Saved_content_model(
-    name: json[Saved_field.name] as String,
+    id: json[Saved_field.id] as int,
     image: json[Saved_field.image] as String,
     title: json[Saved_field.title] as String,
      date: json[Saved_field.date] as String,
@@ -52,7 +52,7 @@ class Saved_content_model{
     );
 
   Map<String, Object?> toJson() => {
-    Saved_field.name: name,
+    Saved_field.id: id,
     Saved_field.image: image,
     Saved_field.title: title,
     Saved_field.date: date,

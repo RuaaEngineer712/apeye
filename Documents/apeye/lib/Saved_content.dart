@@ -21,7 +21,6 @@ class _Saved_content extends State<Saved_content>{
   late Saved_content_model saved;
   
 
-
   bool isLoading = false;
   
   @override
@@ -32,19 +31,19 @@ class _Saved_content extends State<Saved_content>{
     refreshSaved();
   }
 
-  // @override
-  // void dispose(){
-  //   SavedDatabase.instance.colse();
+  @override
+  void dispose(){
+    SavedDatabase.instance.colse();
 
-  //   super.dispose();
-  // }
+    super.dispose();
+  }
   
 
   Future refreshSaved() async{
     setState(() {
       isLoading = true;
     });
-    this.saved = await SavedDatabase.instance.readContenet('The Wall Street Journal');
+    this.saved = await SavedDatabase.instance.readContenet(15);
 
     setState(() {
       isLoading = false;
@@ -293,7 +292,7 @@ class _Saved_content extends State<Saved_content>{
     );
   }
  delete() async {
-    await SavedDatabase.instance.delete('The Wall Street Journal');
+    await SavedDatabase.instance.delete(15);
   }
   
 }

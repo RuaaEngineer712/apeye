@@ -167,7 +167,7 @@ class _All extends State<All>{
                                                         
                                                       // };
                                                       Saved_content_model toDB = Saved_content_model(
-                                                        name: name_here,
+                                                        id: 15,
                                                         image: image_here,
                                                         title: title_here, 
                                                         date: date_here,
