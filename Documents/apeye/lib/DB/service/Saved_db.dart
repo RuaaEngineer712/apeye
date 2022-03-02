@@ -24,22 +24,23 @@ class SavedDatabase{
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
 
-    return openDatabase(path, version: 1, onCreate: _creatDB);
+    return openDatabase(path, version: 2, onCreate: _creatDB);
   }
 
   Future _creatDB(Database db, int version) async{
     final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     final textType = 'TEXT NOT NULL';
-    await db.execute('''
-      CREATE TABLE $tableSaved (
-        ${Saved_field.id} $idType,
-        ${Saved_field.image} $textType,
-        ${Saved_field.title} $textType,
-        ${Saved_field.date} $textType,
-        ${Saved_field.description} $textType,
-
-      )'''
-    );
+    // await db.execute('''
+    //   CREATE TABLE $tableSaved (
+    //     ${Saved_field.id} $idType,
+    //     ${Saved_field.image} $textType,
+    //     ${Saved_field.title} $textType,
+    //     ${Saved_field.date} $textType,
+    //     ${Saved_field.description} $textType,
+    //   )'''
+    // );
+    String sql = 'CREATE TABLE saved_content(name, image, title, date, description)';
+    await db.execute(sql);
   }
 
   Future<Saved_content_model> create(Saved_content_model saved_content) async{
@@ -52,24 +53,24 @@ class SavedDatabase{
     // final id = await db.rawInsert('INSERT INTO saved_content ($columns) VALUES ($values)');
 
     final id = await db.insert(tableSaved, saved_content.toJson());
-    return saved_content.copy(id: id);
+    return saved_content.copy(name: id.toString());
   }
 
-  Future<Saved_content_model> readContenet(int id) async{
+  Future<Saved_content_model> readContenet(String name) async{
     final db = await instance.database;
 
     final maps = await db.query(
       tableSaved,
       columns: Saved_field.values,
-      where: '${Saved_field.id} = ? ',
-      whereArgs: [id],
+      where: '${Saved_field.name} = ? ',
+      whereArgs: [name],
     );
 
     if(maps.isNotEmpty){
       return Saved_content_model.fromJson(maps.first);
     }
     else{
-      throw Exception('ID $id not found');
+      throw Exception('name $name not found');
     }
   }
 
@@ -86,13 +87,13 @@ class SavedDatabase{
     
   }
 
-  Future<int> delete(int id) async{
+  Future<int> delete(String name) async{
     final db = await instance.database;
 
     return await db.delete(
       tableSaved,
-      where: '${Saved_field.id} = ?',
-      whereArgs: [id],
+      where: '${Saved_field.name} = ?',
+      whereArgs: [name],
       );
   }
 

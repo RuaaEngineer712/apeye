@@ -5,6 +5,7 @@ import 'package:apeye/DB/model/Saved_db_model.dart';
 import 'package:apeye/DB/service/Saved_db.dart';
 import 'package:apeye/services/News_services.dart';
 import 'package:apeye/view_models/APIs/news_view_model.dart';
+import 'package:googleapis/people/v1.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ import 'package:flutter/rendering.dart';
 import 'package:meta/meta.dart';
 import 'app_bar/configuration.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '/API/model/load_data.dart';
 
@@ -35,13 +37,14 @@ class _All extends State<All>{
 
   DatabaseUserManager data = new DatabaseUserManager();
 
+  String name_here = '';
   String title_here='';
   String date_here='';
   String description_here='';
   String image_here='';
-  String url_here='';
+  String url_here = '';
   
-
+  
 
   @override
   Widget build(BuildContext context) {
@@ -50,21 +53,22 @@ class _All extends State<All>{
     
     return Consumer<News_view_model>(builder: (context, News_view_model newsList , child) {
       print(newsList.newsList);
+      String url;
       return Container(       
         child: Column(
           children: <Widget>[
             for (News news in newsList.newsList)
-              Container(          
+              Container(     
+                child: InkWell(     
                 child: GestureDetector(
                   child: 
-                  
+                   
                   Container(
                     height: 240,
                     margin: EdgeInsets.symmetric(horizontal: 20),                  
-                    child: InkWell(
+                    
                       child: Row(
                         children: [
-                        // newsList.newsList.map((news) => {
                         Expanded(
                           child: Stack(
                             children: [
@@ -148,20 +152,41 @@ class _All extends State<All>{
                                                   value: 1,
                                                   onTap: () => {
                                                     setState(() {
+                                                      // String id_here = news.id;
                                                       title_here = news.title;
                                                       date_here = news.date;
                                                       description_here = news.description;
                                                       image_here = news.imageUrl;
                                                       url_here = news.articleUrl;
+                                                      // Map<String, Object?> mapAPI = {
+                                                      //   'id' : 1,
+                                                      //   'image': image_here,
+                                                      //   'title': title_here, 
+                                                      //   'date': date_here,
+                                                      //   'description': description_here,
+                                                        
+                                                      // };
+                                                      Saved_content_model toDB = Saved_content_model(
+                                                        name: name_here,
+                                                        image: image_here,
+                                                        title: title_here, 
+                                                        date: date_here,
+                                                        description: description_here,
+
+                                                      );
+                                                      print("*********************");
+                                                      print(toDB.title);
+                                                      print("*********************");
+                                                      onSelected(context, 1, toDB);
                                                     }),
-                                                    onSelected(context, 1),
+                                                    
                                                   },
                                                 ),
                                                 PopupMenuItem(
                                                   child: Text("Share"),
                                                   value: 2,
                                                   onTap: () => {
-                                                    onSelected(context, 2),
+                                                    // onSelected(context, 2),
                                                   },
                                                 ),
                                               ],                                          
@@ -188,8 +213,21 @@ class _All extends State<All>{
                           ), 
                         ),
                       ],
-                    ),                      
+                      
                     ),
+                                        
+                    
+                    
+                    ),
+                    onTap:() async =>{
+                      url = news.articleUrl,
+                      if (await canLaunch(url)){
+                        print("Hello NOOOOOOOOOOn"),
+                        await launch(url),}
+                      else 
+                        // can't launch url, there is some error
+                        throw "Could not launch ",
+                    },  
                   ),
                 )                
               ),
@@ -198,11 +236,11 @@ class _All extends State<All>{
       );
     });
   }
-  void onSelected(BuildContext context, int item) async{
+  void onSelected(BuildContext context, int item, Saved_content_model toDB) async{
      switch(item){
         case 1:{
-          await data.save_post('id', 'url');
-          print('*****************************');
+          await SavedDatabase.instance.create(toDB);
+          print('*****************************'+ toDB.title);
         break;
         }
         case 2:{
