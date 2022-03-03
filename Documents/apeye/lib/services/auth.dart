@@ -81,6 +81,20 @@ Future<void> userData(String email, Map<String , String> interest) async{
   }
 }
 
+// Future<String> getUserData(String email) async{
+//   try{
+//       final querySnapshot = await Interests.where('email' , isEqualTo: email).get();
+//       String interest_result = querySnapshot.docs.
+//       for (var doc in querySnapshot.docs) {
+//         return interest_result = doc.get('interest');
+//       }
+//       return interest_result;
+//   }
+//   catch(e){
+//     return e.toString();
+//   }
+// }
+
 Future<bool> updateProfile(String old, String email, String password , Map<String , String> interest) async{
   try{
       
@@ -138,17 +152,6 @@ Future<void> updateInterest(String email, Map<String , String> interest) async{
     print(e.toString());
   }
 
-}
-
-Future<void> save_post(String id, String name) async{
-  try{
-    
-    await posts.doc(id).set({'title': name});
-    
-  }   
-  catch(e){
-    print(e.toString());
-  }
 }
 
 

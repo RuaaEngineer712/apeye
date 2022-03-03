@@ -19,7 +19,7 @@ List<Map> categories = [
     'iconPath': 'assets/images/job-icon.png'
   },
   {
-    'name': 'Courses',
+    'name': 'Blogs',
     'iconPath': 'assets/images/course-icon.png'
   },
 ];

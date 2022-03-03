@@ -78,7 +78,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       Navigator.push(
                         context,
                         new MaterialPageRoute(
-                          builder: (context) =>  about_us(),
+                          builder: (context) =>  AboutScreen(),
                         ),
                       ),
                     }

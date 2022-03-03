@@ -1,4 +1,6 @@
 
+import 'package:apeye/view_models/APIs/Blogs_view_model.dart';
+import 'package:apeye/view_models/APIs/Jobs_view_model.dart';
 import 'package:apeye/view_models/APIs/news_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -6,11 +8,15 @@ import 'drawerScreen.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../All.dart';
+import '../Jobs_ui.dart';
+import '../Blogs_ui.dart';
+
 import 'configuration.dart';
 
 
 class HomeScreen extends StatefulWidget {
   String email;
+  // HomeScreen(this.email, this.interest);
   HomeScreen(this.email);
   
   @override
@@ -18,6 +24,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  
 
   String email;
   _HomeScreenState(this.email);
@@ -27,23 +35,22 @@ class _HomeScreenState extends State<HomeScreen> {
   double scaleFactor = 1;
 
   bool isDrawerOpen = false;
-  bool clicked= false;
+  bool clicked_news= false;
+  bool clicked_job= false;
+  bool clicked_blogs= false;
+
 
   Future<void> _refresh(){
     return Future.delayed(
       Duration(seconds: 0)
     );
   }
-  @override
 
+  @override
     Widget build(BuildContext context) {
     final text = MediaQuery.of(context).platformBrightness == Brightness.dark ? 'DarkTheme' : 'LightTheme';
     String element = '';
-    
-    return 
-    ChangeNotifierProvider<News_view_model>(
-      create: (context) => News_view_model(),
-      child: RefreshIndicator(
+    return RefreshIndicator(
         edgeOffset: 0,
         onRefresh: _refresh,
         child: Scaffold(
@@ -153,11 +160,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                         if(element == "News"){
                                           print(element),
                                           setState(() {
-                                            clicked = true;
+                                            clicked_news = true;
+                                            clicked_job = false;
+                                            clicked_blogs = false;
                                           })
                                         }
-                                        else{
-                                          clicked = false,
+                                        else if(element == "Jobs"){
+                                           print(element),
+                                          setState(() {
+                                            clicked_job = true;
+                                            clicked_news = false;
+                                            clicked_blogs = false;
+                                          })
+                                        }
+                                        else if(element == "Blogs"){
+                                           print(element),
+                                          setState(() {
+                                            clicked_job = false;
+                                            clicked_news = false;
+                                            clicked_blogs = true;
+                                          })
                                         }
                                         
                                           // new Container(
@@ -172,19 +194,55 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                           }
                         ),
-                      ), 
-                      Visibility(
-                        visible: clicked,
-                        child: All(),
-                      )         
-                    ],
-                  ),
-                ),
-              ),
+                      ),
+                      // MultiProvider(
+                      //   providers: [                        
+                          
+                          
+
+                            Visibility(
+                              visible: clicked_job,
+                            child: ChangeNotifierProvider<Jobs_view_model>(
+                            create: (context) => Jobs_view_model(),
+                            builder: (context, child) => Jobs_ui(), 
+                            ),
+                          ),         
+                          
+                             Visibility(
+                              visible: clicked_news,
+                              child: ChangeNotifierProvider<News_view_model>(
+                            create: (context) => News_view_model(),
+                            builder: (context, child) => All(), 
+                            // child: All(), 
+                            ),
+                          ),
+
+                          Visibility(
+                              visible: clicked_blogs,
+                              child: ChangeNotifierProvider<Blogs_view_model>(
+                            create: (context) => Blogs_view_model(),
+                            builder: (context, child) => Blogs_ui(), 
+                            // child: Blogs_ui(), 
+                            ),
+                          ),
+                      //   ],
+                      // ),
+                // ),
+              // ),
             ],
           ),
         ),
-      ),
+      // ),
+      // }
+    //       ),
+        
+    //   ),
+    //   ],
+      
+    ),
+      ],
+              ),
+              ),
     );
   }
 }

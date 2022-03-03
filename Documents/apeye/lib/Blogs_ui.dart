@@ -1,16 +1,16 @@
 import 'dart:math';
 
-import 'package:apeye/API/model/News_model.dart';
+import 'package:apeye/API/model/Blogs_model.dart';
 import 'package:apeye/DB/model/Saved_db_model.dart';
 import 'package:apeye/DB/service/Saved_db.dart';
 import 'package:apeye/WebView.dart';
-import 'package:apeye/services/News_services.dart';
-import 'package:apeye/view_models/APIs/news_view_model.dart';
+import 'package:apeye/services/Blogs_services.dart';
+import 'package:apeye/view_models/APIs/blogs_view_model.dart';
 import 'package:googleapis/people/v1.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
-import 'API/model/News.dart';
+import 'API/model/Blogs.dart';
 import '/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -25,40 +25,38 @@ import '/API/model/load_data.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
 
-class All extends StatefulWidget { 
+class Blogs_ui extends StatefulWidget { 
   @override
   State<StatefulWidget> createState() {
 
-    return _All();
+    return _Blogs_ui();
   }
 }
 
-class _All extends State<All>{
-  News_view_model model = News_view_model();
+class _Blogs_ui extends State<Blogs_ui>{
+  Blogs_view_model model = Blogs_view_model();
 
   DatabaseUserManager data = new DatabaseUserManager();
 
-  String name_here = '';
   String title_here='';
   String date_here='';
   String description_here='';
   String image_here='';
-  String url_here = '';
   
   
 
   @override
   Widget build(BuildContext context) {
 
-    Provider.of<News_view_model>(context, listen: false).fetchNews();  
+    Provider.of<Blogs_view_model>(context, listen: false).fetchBlogs();  
     
-    return Consumer<News_view_model>(builder: (context, News_view_model newsList , child) {
-      print(newsList.newsList);
+    return Consumer<Blogs_view_model>(builder: (context, Blogs_view_model blogsList , child) {
+      print(blogsList.blogsList);
       String url;
       return Container(       
         child: Column(
           children: <Widget>[
-            for (News news in newsList.newsList)
+            for (Blogs blogs in blogsList.blogsList)
               Container(     
                 child: InkWell(     
                 child: GestureDetector(
@@ -88,7 +86,7 @@ class _All extends State<All>{
                                         borderRadius: BorderRadius.circular(20), // Image border
                                         child: SizedBox.fromSize(
                                           size: Size.fromRadius(100), // Image radius
-                                          child: Image.network(news.imageUrl, fit: BoxFit.cover),
+                                          // child: Image.network(blogs.imageUrl, fit: BoxFit.cover),
                                         ),
                                       
                                       // fit: BoxFit.fitHeight,
@@ -126,14 +124,14 @@ class _All extends State<All>{
                                             Padding(padding: EdgeInsets.only(left: 10)),
                                             // CircleAvatar(
                                             //   // radius: 30.0,
-                                            //   backgroundImage: NetworkImage(news.imageUrl),
+                                            //   backgroundImage: NetworkImage(blogs.imageUrl),
                                             //   // backgroundColor: Colors.transparent,
                                             //   ),
                                               new Column(
                                                 children: [
                                                   SizedBox(width: 10,),
-                                                  Text('title',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),                                                                                    
-                                                  Text(news.date,style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold, fontSize: 10),),                                          
+                                                  Text(blogs.title,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),                                                                                    
+                                                  Text(blogs.published,style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold, fontSize: 10),),                                          
                                             
                                                 ],
                                               ),
@@ -153,12 +151,12 @@ class _All extends State<All>{
                                                   value: 1,
                                                   onTap: () => {
                                                     setState(() {
-                                                      // String id_here = news.id;
-                                                      title_here = news.title;
-                                                      date_here = news.date;
-                                                      description_here = news.description;
-                                                      image_here = news.imageUrl;
-                                                      url_here = news.articleUrl;
+                                                      // String id_here = blogs.id;
+                                                      title_here = blogs.title;
+                                                      date_here = blogs.published;
+                                                      description_here = blogs.content;
+                                                      image_here = blogs.url;
+                                                      // url_here = blogs.articleUrl;
                                                       // Map<String, Object?> mapAPI = {
                                                       //   'id' : 1,
                                                       //   'image': image_here,
@@ -205,7 +203,7 @@ class _All extends State<All>{
                                     children: [
                                       Padding(padding: EdgeInsets.only(left: 0, top: 20)),
                                       Text('Description:',style: TextStyle(color: Colors.black, fontSize: 11,fontWeight: FontWeight.bold),),
-                                      Text(news.description,style: TextStyle(color: Colors.grey,fontSize: 8,)),                                      
+                                      Text(blogs.content,style: TextStyle(color: Colors.grey,fontSize: 8,)),                                      
                                     ],  
                                   ),  
                                 ),
@@ -221,7 +219,7 @@ class _All extends State<All>{
                     
                     ),
                     onTap:() async =>{
-                      url = news.articleUrl,
+                      url = blogs.url,
                       if (await canLaunch(url)){
                         print("Hello NOOOOOOOOOOn"),
                         Navigator.push(

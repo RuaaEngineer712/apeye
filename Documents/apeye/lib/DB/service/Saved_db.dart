@@ -56,6 +56,7 @@ class SavedDatabase{
 
     final id = await db.insert(tableSaved, saved_content.toJson());
     print('***************'"");print(id);
+    this.colse();
     return saved_content.copy(id: id);
   }
 
