@@ -81,6 +81,25 @@ Future<void> userData(String email, Map<String , String> interest) async{
   }
 }
 
+
+Future<void> SavedPost(String email, String image, String title, String time, String description) async{
+  try{    
+    await posts.doc().set({
+      "image": image,
+      "title": title,
+      "time": time,
+      "description": description,
+      "email" : email
+    });
+  }
+  catch(e){
+    print(e.toString());
+  }
+}
+
+
+
+
 // Future<String> getUserData(String email) async{
 //   try{
 //       final querySnapshot = await Interests.where('email' , isEqualTo: email).get();
@@ -163,7 +182,20 @@ Future<String> getCurrentID() async{
 
 
 
-
+Future<dynamic> getSavedPostTitle(String email) async{
+  try{ 
+    String title;
+    final data = (await posts.doc(email).get());
+    return data;
+    print("************************* ********************* ***********");
+    // print (querySnapshot);
+    
+    
+  }
+  catch(e){
+    return e.toString();
+  }
+}
 
 
 
@@ -187,6 +219,8 @@ Future<String> getCurrentID() async{
 //     print(e.toString());
 //   }
 }
+
+
 
 // Future<String> getEmail() async{
 //   try{

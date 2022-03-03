@@ -70,7 +70,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         Navigator.push(
                         context,
                         new MaterialPageRoute(
-                          builder: (context) =>  Saved_content(),
+                          builder: (context) =>  Saved_content(email),
                         ),
                       ),
                     }

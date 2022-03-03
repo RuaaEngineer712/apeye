@@ -178,7 +178,8 @@ class _All extends State<All>{
                                                       print("*********************");
                                                       print(toDB.title);
                                                       print("*********************");
-                                                      onSelected(context, 1, toDB);
+                                                      // onSelected(context, 1, toDB);
+                                                      onSelected(context, 1, image_here, title_here, date_here, description_here);
                                                     }),
                                                     
                                                   },
@@ -244,11 +245,12 @@ class _All extends State<All>{
       );
     });
   }
-  void onSelected(BuildContext context, int item, Saved_content_model toDB) async{
+  void onSelected(BuildContext context, int item, String image, String title, String time, String description) async{
      switch(item){
         case 1:{
-          await SavedDatabase.instance.create(toDB);
-          print('*****************************'+ toDB.title);
+          // await SavedDatabase.instance.create(toDB);
+          await data.SavedPost('Noon@gmail.com',image, title, time, description);
+          // print('*****************************'+ toDB.title);
         break;
         }
         case 2:{
