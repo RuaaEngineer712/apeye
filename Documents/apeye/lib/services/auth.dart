@@ -82,14 +82,15 @@ Future<void> userData(String email, Map<String , String> interest) async{
 }
 
 
-Future<void> SavedPost(String email, String image, String title, String time, String description) async{
+Future<void> SavedPost(String email, String image, String title, String time, String description, String url) async{
   try{    
     await posts.doc().set({
       "image": image,
       "title": title,
       "time": time,
       "description": description,
-      "email" : email
+      "email" : email,
+      "url": url,
     });
   }
   catch(e){
@@ -97,22 +98,19 @@ Future<void> SavedPost(String email, String image, String title, String time, St
   }
 }
 
-
-
-
-// Future<String> getUserData(String email) async{
-//   try{
-//       final querySnapshot = await Interests.where('email' , isEqualTo: email).get();
-//       String interest_result = querySnapshot.docs.
-//       for (var doc in querySnapshot.docs) {
-//         return interest_result = doc.get('interest');
-//       }
-//       return interest_result;
-//   }
-//   catch(e){
-//     return e.toString();
-//   }
-// }
+Future<void> delete_save_post(String email, String title) async{
+  try{    
+    
+    final querySnapshot = await posts.where('title', isEqualTo: title).where('email', isEqualTo: email).get();
+    for (var doc in querySnapshot.docs) {
+        await posts.doc(doc.id).delete();
+      }
+    print("***************" "************  deleted" );
+  }
+  catch(e){
+    print(e.toString());
+  }
+}
 
 Future<bool> updateProfile(String old, String email, String password , Map<String , String> interest) async{
   try{
@@ -196,109 +194,4 @@ Future<dynamic> getSavedPostTitle(String email) async{
     return e.toString();
   }
 }
-
-
-
-// Future<void> testData(int id, String email, String interest) async{
-//   try{
-//     test.doc().set({});
-//     await test.doc(email).set({'email':email, 'interest': });
-//   }   
-//   catch(e){
-//     print(e.toString());
-//   }
-// }
-
-// Future<void> setEmail(String email) async{
-//   try{
-//     await Interests.doc(email).set({Interests: email});
-
-//     await Interests.doc(email).set({Interests: email});
-//   }   
-//   catch(e){
-//     print(e.toString());
-//   }
 }
-
-
-
-// Future<String> getEmail() async{
-//   try{
-//     final Stream<QuerySnapshot> useres = FirebaseFirestore.instance.collection("Users").snapshots();
-    
-//     return data;
-//   }   
-//   catch(e){
-//     print(e.toString());
-//     return "Failed";
-//   }
-// }
-
-
-
-
-
-// }
-// Future<String> getEmail() async{
-//   try{
-//     Interests email = await Interests.doc().get();
-//     return 
-//   }   
-//   catch(e){
-//     print(e.toString());
-//   }
-// }
-// Future<void> getInterest() async{
-//   try{
-//     await Interests.doc().get();
-//   }   
-//   catch(e){
-//     print(e.toString());
-//   }
-// }
-// }
-
-// class User{
-//   final String uid;
-
-
-//   User({required this.uid});
-// }
-
-// class AuthBase{
-
-  
-
-//   User _userFromFireBase(FirebaseAuth user){
-//     return User(uid: user.uid);
-//   }
-
-//   Future<void> registerWithEmailAndPassword(String email, String password) async {
-//     try {
-//       final authResult = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-//       return _userFromFireBase(authResult.user);
-//     }
-//     catch (e){
-//       print(e.toString());
-//     }
-//   }
-
-//   Future<void> loginWithEmailAndPassword(String email, String password) async {
-//     try {
-//       final authResult = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-//       return _userFromFireBase(authResult.user);
-//     } 
-//     catch(e){
-//       print(e.toString());
-//     } 
-//   }
-
-//   Future<void> logout() async{
-//     try {
-//       await FirebaseAuth.instance.signOut();
-//     }
-//     catch(e){
-//       print(e.toString());
-//     }
-//   }
-// }

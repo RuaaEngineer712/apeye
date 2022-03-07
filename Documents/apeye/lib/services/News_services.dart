@@ -9,7 +9,7 @@ class News_services{
   final String key = 'd6f8838c0f6441b0a0cbaeda4274a7d7';
   Future<List<News>> fetchNews() async{    
     try{
-      var url  = Uri.parse('https://newsapi.org/v2/top-headlines?country=us&apiKey=$key');
+      var url  = Uri.parse('https://newsapi.org/v2/top-headlines?country=us&category=technology&apiKey=d6f8838c0f6441b0a0cbaeda4274a7d7');
       
       http.Response response = await http.get(url);
       if(response.statusCode == 200){

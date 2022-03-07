@@ -18,6 +18,7 @@ import 'package:meta/meta.dart';
 import 'app_bar/configuration.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_share/flutter_share.dart';
 
 import '/API/model/load_data.dart';
 
@@ -26,14 +27,18 @@ import '/API/model/load_data.dart';
 
 
 class All extends StatefulWidget { 
+  String email;
+    All(this.email);
   @override
   State<StatefulWidget> createState() {
-
-    return _All();
+    
+    return _All(email);
   }
 }
 
 class _All extends State<All>{
+  String email;
+  _All(this.email);
   News_view_model model = News_view_model();
 
   DatabaseUserManager data = new DatabaseUserManager();
@@ -49,7 +54,7 @@ class _All extends State<All>{
 
   @override
   Widget build(BuildContext context) {
-
+    
     Provider.of<News_view_model>(context, listen: false).fetchNews();  
     
     return Consumer<News_view_model>(builder: (context, News_view_model newsList , child) {
@@ -73,7 +78,7 @@ class _All extends State<All>{
                         Expanded(
                           child: Stack(
                             children: [
-                              Container(
+                               Container(
                                 decoration: BoxDecoration(color: Colors.lightBlue[900],
                                 borderRadius: BorderRadius.circular(20),
                                   boxShadow: shadowList,
@@ -104,6 +109,7 @@ class _All extends State<All>{
                           ),
                         ),
                         Expanded(
+                          
                           child: Container(
                             margin: EdgeInsets.only(top: 60,bottom: 20),
                             decoration: BoxDecoration(color: Colors.white,
@@ -120,27 +126,32 @@ class _All extends State<All>{
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Expanded(child: 
-                                        new Row(
-                                          children: [
-                                            Padding(padding: EdgeInsets.only(left: 10)),
+                                      // Expanded(
+                                        // child: new Row(
+                                        //   children: [
+                                            // Padding(padding: EdgeInsets.only(left: 10)),
                                             // CircleAvatar(
                                             //   // radius: 30.0,
                                             //   backgroundImage: NetworkImage(news.imageUrl),
                                             //   // backgroundColor: Colors.transparent,
                                             //   ),
                                               new Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  SizedBox(width: 10,),
-                                                  Text('title',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),                                                                                    
-                                                  Text(news.date,style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold, fontSize: 10),),                                          
+                                                  Padding(padding: EdgeInsets.only(left: 5, top: 20)),
+                                                  SizedBox(width: 120,
+                                                   child:Text(news.title,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 8),),
+                                                  ),Text(news.date,style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold, fontSize: 10),),                                             
+                                    
+                                                  // SizedBox(width: 10,),
+                                                                                     
                                             
                                                 ],
                                               ),
                                             
-                                          ],
-                                        ),
-                                      ),                                  
+                                      //     ],
+                                      //   ),
+                                      // ),                                  
                                       Container( 
                                         margin: EdgeInsets.only(right: 10),     
                                         child: Stack(                       
@@ -173,13 +184,14 @@ class _All extends State<All>{
                                                         title: title_here, 
                                                         date: date_here,
                                                         description: description_here,
+                                                        url: url_here,
 
                                                       );
                                                       print("*********************");
                                                       print(toDB.title);
                                                       print("*********************");
                                                       // onSelected(context, 1, toDB);
-                                                      onSelected(context, 1, image_here, title_here, date_here, description_here);
+                                                      onSelected(context, 1, image_here, title_here, date_here, description_here, url_here);
                                                     }),
                                                     
                                                   },
@@ -188,7 +200,7 @@ class _All extends State<All>{
                                                   child: Text("Share"),
                                                   value: 2,
                                                   onTap: () => {
-                                                    // onSelected(context, 2),
+                                                    share(context, 2, news.articleUrl),
                                                   },
                                                 ),
                                               ],                                          
@@ -245,19 +257,15 @@ class _All extends State<All>{
       );
     });
   }
-  void onSelected(BuildContext context, int item, String image, String title, String time, String description) async{
-     switch(item){
-        case 1:{
-          // await SavedDatabase.instance.create(toDB);
-          await data.SavedPost('Noon@gmail.com',image, title, time, description);
-          // print('*****************************'+ toDB.title);
-        break;
-        }
-        case 2:{
-          // await data.save_post('hiiii','url');
-          print('***************************** Share ');
-        break;
-        }               
-    }
+  void onSelected(BuildContext context, int item, String image, String title, String time, String description, String url) async{      
+    await data.SavedPost(email ,image, title, time, description, url);
+  }
+
+  Future<void> share(BuildContext context, int item, dynamic url) async{
+    await FlutterShare.share(
+      title: 'share post',
+      text:  'share from apey',  
+      linkUrl: url,
+    );
   }
 } 

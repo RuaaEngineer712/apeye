@@ -9,7 +9,7 @@ class Blogs_services{
   final String key = 'd6f8838c0f6441b0a0cbaeda4274a7d7';
   Future<List<Blogs>> fetchBlogs() async{    
     try{
-      var url  = Uri.parse('https://www.googleapis.com/blogger/v3/blogs/2399953/posts?key=AIzaSyCC9TrOYMA6FKhBrd57u113aRIfoy2iDEQ');
+      var url  = Uri.parse('https://www.googleapis.com/blogger/v3/blogs/2399953/posts?key=A IzaSyCC9TrOYMA6FKhBrd57u113aRIfoy2iDEQ');
       
       http.Response response = await http.get(url);
       if(response.statusCode == 200){

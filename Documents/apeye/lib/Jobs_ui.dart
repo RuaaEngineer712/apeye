@@ -6,6 +6,7 @@ import 'package:apeye/DB/service/Saved_db.dart';
 import 'package:apeye/services/Jobs_services.dart';
 import 'package:apeye/view_models/APIs/Jobs_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:googleapis/people/v1.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
@@ -27,14 +28,19 @@ import '/API/model/load_data.dart';
 
 
 class Jobs_ui extends StatefulWidget { 
+  String email;
+  Jobs_ui(this.email);
   @override
   State<StatefulWidget> createState() {
 
-    return _Jobs_ui();
+    return _Jobs_ui(email);
   }
 }
 
 class _Jobs_ui extends State<Jobs_ui>{
+
+  String email; 
+  _Jobs_ui(this.email);
 
   Jobs_view_model model = Jobs_view_model();
 
@@ -299,12 +305,13 @@ class _Jobs_ui extends State<Jobs_ui>{
                                                                     title: title_here, 
                                                                     date: date_here,
                                                                     description: description_here,
+                                                                    url: jobs.link,
 
                                                                   );
                                                                   print("*********************");
                                                                   print(toDB.title);
                                                                   print("*********************");
-                                                      onSelected(context, 1, image_here, title_here, date_here, description_here);
+                                                                  onSelected(context, 1, image_here, title_here, date_here, description_here, jobs.link);
                                                                 }),
                                                                 
                                                               },
@@ -313,7 +320,7 @@ class _Jobs_ui extends State<Jobs_ui>{
                                                               child: Text("Share"),
                                                               value: 2,
                                                               onTap: () => {
-                                                                // onSelected(context, 2),
+                                                                share(context, 2, jobs.link),
                                                               },
                                                             ),
                                                           ],                                          
@@ -398,19 +405,15 @@ class _Jobs_ui extends State<Jobs_ui>{
       }
     );
   }
- void onSelected(BuildContext context, int item, String image, String title, String time, String description) async{
-     switch(item){
-        case 1:{
-          // await SavedDatabase.instance.create(toDB);
-          await data.SavedPost('Noon@gmail.com',image, title, time, description);
-          // print('*****************************'+ toDB.title);
-        break;
-        }
-        case 2:{
-          // await data.save_post('hiiii','url');
-          print('***************************** Share ');
-        break;
-        }               
-    }
+ void onSelected(BuildContext context, int item, String image, String title, String time, String description, String url) async{      
+    await data.SavedPost(email,image, title, time, description, url);
+  }
+
+  Future<void> share(BuildContext context, int item, dynamic url) async{
+    await FlutterShare.share(
+      title: 'share post',
+      text:  'share from apey',  
+      linkUrl: url,
+    );
   }
 } 

@@ -1,7 +1,7 @@
-
 import 'package:apeye/view_models/APIs/Blogs_view_model.dart';
 import 'package:apeye/view_models/APIs/Jobs_view_model.dart';
 import 'package:apeye/view_models/APIs/news_view_model.dart';
+import 'package:googleapis/servicemanagement/v1.dart';
 import 'package:provider/provider.dart';
 
 import 'drawerScreen.dart';
@@ -204,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               visible: clicked_job,
                             child: ChangeNotifierProvider<Jobs_view_model>(
                             create: (context) => Jobs_view_model(),
-                            builder: (context, child) => Jobs_ui(), 
+                            builder: (context, child) => Jobs_ui(email), 
                             ),
                           ),         
                           
@@ -212,8 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               visible: clicked_news,
                               child: ChangeNotifierProvider<News_view_model>(
                             create: (context) => News_view_model(),
-                            builder: (context, child) => All(), 
-                            // child: All(), 
+                            builder: (context, child) => All(email), 
                             ),
                           ),
 
@@ -221,8 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               visible: clicked_blogs,
                               child: ChangeNotifierProvider<Blogs_view_model>(
                             create: (context) => Blogs_view_model(),
-                            builder: (context, child) => Blogs_ui(), 
-                            // child: Blogs_ui(), 
+                            builder: (context, child) => Blogs_ui(email), 
                             ),
                           ),
                       //   ],
@@ -243,6 +241,43 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
               ),
               ),
+    );
+  }
+}
+
+class DataSearch extends SearchDelegate<String>{
+  Future<void> newslist = new News_view_model().fetchNews();
+  
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [IconButton(onPressed: (){}, icon: Icon(Icons.clear))];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: (){},
+       icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation
+      ),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestionList = query.isEmpty? newslist : newslist;
+    return ListView(
+      children: [
+        // Text(suggestionList),
+      ],
     );
   }
 }

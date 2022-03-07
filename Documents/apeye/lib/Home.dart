@@ -238,7 +238,7 @@ class Home extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     child: new Column(
                       children: [
-                        All(),
+                        // All(),
                       ],
                     ),
                 ),    
