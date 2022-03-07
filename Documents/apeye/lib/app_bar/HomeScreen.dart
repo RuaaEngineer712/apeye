@@ -1,3 +1,4 @@
+import 'package:apeye/services/auth.dart';
 import 'package:apeye/view_models/APIs/Blogs_view_model.dart';
 import 'package:apeye/view_models/APIs/Jobs_view_model.dart';
 import 'package:apeye/view_models/APIs/news_view_model.dart';
@@ -25,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  DatabaseUserManager get_interest = new DatabaseUserManager();
   
 
   String email;
@@ -38,7 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
   bool clicked_news= false;
   bool clicked_job= false;
   bool clicked_blogs= false;
-
+  
+  List interrests = [];
+    
 
   Future<void> _refresh(){
     return Future.delayed(
@@ -47,7 +51,33 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('########### ####### #####');
+    
+    
+  }
+
+  @override
     Widget build(BuildContext context) {
+    
+    // print(interrests);
+    Future<List> fromApi = get_interest.getInterest(email);
+    
+    
+      print("&&&&&&&##3####6^^^^^^^^^^^^^");
+      print(interrests);
+      if (interrests.length == 0){
+        
+        setState(() {
+          fromApi.then((value) => {
+            interrests =  value,
+            print(value),
+          });
+        });
+      }
+    
     final text = MediaQuery.of(context).platformBrightness == Brightness.dark ? 'DarkTheme' : 'LightTheme';
     String element = '';
     return RefreshIndicator(
@@ -199,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       //   providers: [                        
                           
                           
-
+                            
                             Visibility(
                               visible: clicked_job,
                             child: ChangeNotifierProvider<Jobs_view_model>(
@@ -207,12 +237,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (context, child) => Jobs_ui(email), 
                             ),
                           ),         
-                          
+                            
                              Visibility(
                               visible: clicked_news,
                               child: ChangeNotifierProvider<News_view_model>(
                             create: (context) => News_view_model(),
-                            builder: (context, child) => All(email), 
+                            
+                            builder: (context, child) => All(email, interrests), 
                             ),
                           ),
 
@@ -246,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class DataSearch extends SearchDelegate<String>{
-  Future<void> newslist = new News_view_model().fetchNews();
+  // Future<void> newslist = new News_view_model().fetchNews(interests);
   
 
   @override
@@ -273,7 +304,7 @@ class DataSearch extends SearchDelegate<String>{
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty? newslist : newslist;
+    // final suggestionList = query.isEmpty? newslist : newslist;
     return ListView(
       children: [
         // Text(suggestionList),

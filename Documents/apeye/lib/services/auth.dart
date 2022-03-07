@@ -1,16 +1,10 @@
-
-// import 'dart:js';
-
-// import 'dart:html';
-
-// import 'dart:html';
-
 import 'dart:ffi';
 
 import 'package:apeye/API/model/News.dart';
 import 'package:apeye/app_bar/HomeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:googleapis/compute/v1.dart';
 
 
 import 'package:http/http.dart' as http;
@@ -57,7 +51,7 @@ class DatabaseUserManager {
   final CollectionReference Interests = FirebaseFirestore.instance.collection('Users');
     final CollectionReference posts = FirebaseFirestore.instance.collection('SavedPost_test');
 
-    final CollectionReference test = FirebaseFirestore.instance.collection('Interest_test');
+    // final CollectionReference test = FirebaseFirestore.instance.collection('Interest_test');
 
 Future<void> logout() async{
   try {
@@ -81,6 +75,28 @@ Future<void> userData(String email, Map<String , String> interest) async{
   }
 }
 
+Future<List> getInterest(String email) async{
+  try{    
+    print("***************" "************ \n\n\n\n\n before get interest"); 
+    var data = [];
+    final querySnapshot = await Interests.where('email', isEqualTo: email).get()
+    .then((querySnapshot) {
+        
+        querySnapshot.docs.forEach((doc) {
+            data = doc['interest'].values.toList();
+        });
+        // print("&&&&&&&##3####");
+        // print(data);
+        
+    });
+    return data;
+    // return [];
+  }
+  catch(e){
+    print(e.toString());
+    return [];
+  }
+}
 
 Future<void> SavedPost(String email, String image, String title, String time, String description, String url) async{
   try{    
@@ -169,29 +185,5 @@ Future<void> updateInterest(String email, Map<String , String> interest) async{
     print(e.toString());
   }
 
-}
-
-
-
-Future<String> getCurrentID() async{
-  String uid = (await _FirebaseAuth.currentUser)!.uid;
-  return uid;
-}
-
-
-
-Future<dynamic> getSavedPostTitle(String email) async{
-  try{ 
-    String title;
-    final data = (await posts.doc(email).get());
-    return data;
-    print("************************* ********************* ***********");
-    // print (querySnapshot);
-    
-    
-  }
-  catch(e){
-    return e.toString();
-  }
 }
 }

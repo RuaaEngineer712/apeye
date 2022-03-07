@@ -2,6 +2,8 @@ import 'dart:ui';
 import 'package:apeye/Registration.dart';
 import 'package:apeye/app_bar/HomeScreen.dart';
 import 'package:apeye/services/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:googleapis/people/v1.dart';
 
@@ -76,6 +78,8 @@ class Login extends State<Login_final>{
                           if(_formkey.currentState!.validate()){
                             bool shouldNavigate = await signIn(_email, _password);
                             if (shouldNavigate) {
+                          
+                              
                               Navigator.push(
                                 context,
                                 new MaterialPageRoute(

@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 class News_view_model extends ChangeNotifier{
   List<News> _newsList = [];
 
-   Future<void> fetchNews() async {
-    _newsList = await News_services().fetchNews();
+   Future<void> fetchNews(List interests) async {
+    _newsList = await News_services().fetchNews(interests);
     notifyListeners();  
   }
 

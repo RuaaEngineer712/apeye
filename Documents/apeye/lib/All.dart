@@ -28,17 +28,19 @@ import '/API/model/load_data.dart';
 
 class All extends StatefulWidget { 
   String email;
-    All(this.email);
+  List interests;
+    All(this.email,this.interests);
   @override
   State<StatefulWidget> createState() {
     
-    return _All(email);
+    return _All(email,interests);
   }
 }
 
 class _All extends State<All>{
   String email;
-  _All(this.email);
+  List interests;
+  _All(this.email,this.interests);
   News_view_model model = News_view_model();
 
   DatabaseUserManager data = new DatabaseUserManager();
@@ -54,8 +56,9 @@ class _All extends State<All>{
 
   @override
   Widget build(BuildContext context) {
-    
-    Provider.of<News_view_model>(context, listen: false).fetchNews();  
+    print("##############@!!!!!!!!!!!!!!!!!!!!");
+    print(interests);
+    Provider.of<News_view_model>(context, listen: false).fetchNews(interests);  
     
     return Consumer<News_view_model>(builder: (context, News_view_model newsList , child) {
       print(newsList.newsList);
