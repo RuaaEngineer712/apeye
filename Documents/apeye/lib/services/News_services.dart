@@ -47,16 +47,5 @@ class News_services{
     return [];
     
   }
-  
-
-  // Future<bool> fetchOrNot async(List<News_model> news_list){
-  //   try{
-  //     fetchNews();
-  //     if(response.statusCode == 200)
-  //   }
-  //   catch(e){
-
-  //   }
-  // }
 
 }

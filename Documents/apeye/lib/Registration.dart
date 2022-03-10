@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:apeye/Login_final.dart';
 import 'package:apeye/Select_interest.dart';
+import 'package:apeye/Verification.dart';
 import 'package:apeye/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -89,17 +90,24 @@ class Register extends State<Registration>{
                         onPressed: () async{
                         if(_formkey.currentState!.validate()){
                           await Interests.doc(email);
-                          bool shouldNavigate = await register(email, _password);
-                          if (shouldNavigate) {
+                          String shouldNavigate = await register(email, _password);
+                          if (shouldNavigate== 'success') {
                             print("register ok");
-                            Navigator.push(
+                            // validator:(value) => shouldNavigate;
+                            bool verified = await verification();
+                            if(verified){       
+                              Navigator.push(
                                 context,
                                 new MaterialPageRoute(
-                                  builder: (context) =>  Select_interest(email),
+                                  builder: (context) =>  Verification(email),
                                 ),
                               );
                             } 
+                            else{
+                              print("dont send to email");
+                            }
                           }
+                        }
                         }, 
                         color: Colors.yellow.withOpacity(0.8),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),

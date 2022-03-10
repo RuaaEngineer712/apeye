@@ -1,6 +1,7 @@
 // import 'package:provider/provider.dart';
 
 import 'package:apeye/API/model/News.dart';
+import 'package:apeye/SearchField.dart';
 import 'package:apeye/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:googleapis/servicecontrol/v2.dart';
@@ -125,13 +126,20 @@ class _Saved_content extends State<Saved_content>{
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20)
                 ),
-                
-                child: Row(
-                  children: [
-                    Icon(Icons.search),
-                    Text('Search...',style: TextStyle(color: Colors.grey,fontSize: 15,fontWeight: FontWeight.bold),),
-                  ],
-                ),
+                child: TextField(
+                     decoration: const InputDecoration(
+                      prefixIcon : Icon(Icons.search),
+                      hintText: ('Search...'),hintStyle: TextStyle(color: Colors.grey,fontSize: 15,fontWeight: FontWeight.bold),),
+                      onTap: (){
+                        Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                        builder: (context) =>  SearchField(),
+                      ),
+                    );
+                      },
+                    // ],
+                  ),
               ),
               // for(Saved_content_model save in one_content)
               StreamBuilder<QuerySnapshot>(

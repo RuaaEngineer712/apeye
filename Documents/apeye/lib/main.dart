@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
-import 'MyTheme.dart';
+import 'SearchField.dart';
 
 import 'firebase_options.dart';
 
@@ -57,9 +57,6 @@ class Go extends StatelessWidget {
     return MaterialApp(
       title: "Home",
       
-      // themeMode: ThemeMode.system,
-      theme: MyThemes.lightTheme,
-      darkTheme: MyThemes.darkTheme,
       // theme: ThemeData(
 //         primaryColor: Colors.yellow,
 //         textTheme: TextTheme(

@@ -5,6 +5,7 @@ import 'package:apeye/app_bar/HomeScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:googleapis/compute/v1.dart';
+import 'package:googleapis/mybusinessverifications/v1.dart';
 
 
 import 'package:http/http.dart' as http;
@@ -22,25 +23,56 @@ Future<bool> signIn(String email, String password) async{
   }
 }
 
-Future<bool> register(String email, String password) async{
+Future<String> register(String email, String password) async{
+  String verification = '';
   try{
     await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-    return true; 
+    return 'success'; 
+
   } on FirebaseAuthException catch(e){
     if(e.code == 'weak-password'){
-      print('the password is too weak');
+      verification ='the password is too weak';
     }
     else if(e.code == 'email-already-in-use'){
-      print('account is already exist');
+      verification ='account is already exist';
     }
-    return false;
+    return verification;
+  }
+  catch(e){
+    // print(e.toString());
+    return e.toString();
+  }
+}
+
+Future<bool> verification() async{
+  try{
+    await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+    print("sent to email after verification");
+    return true; 
   }
   catch(e){
     print(e.toString());
     return false;
   }
+  
 }
 
+Future<bool> isVerified() async{
+  try{
+    bool isverified = await FirebaseAuth.instance.currentUser!.emailVerified? true : false;
+    // print("sent to email after conforming");
+
+    print("sent to email after" ); print(isverified);
+
+    return isverified; 
+    
+  }
+  catch(e){
+    print(e.toString());
+    return false;
+  }
+  
+}
 
 
 
@@ -64,6 +96,7 @@ Future<void> logout() async{
 
 Future<void> userData(String email, Map<String , String> interest) async{
   try{    
+    
     await Interests.doc().set({
       "email" : email ,
       "interest" : interest

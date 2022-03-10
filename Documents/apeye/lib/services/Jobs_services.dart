@@ -6,7 +6,7 @@ import 'package:apeye/API/model/Jobs_model.dart';
 import 'package:http/http.dart' as http;
 
 class Jobs_services{
-  final String key = 'd6f8838c0f6441b0a0cbaeda4274a7d7';
+  // final String key = 'd6f8838c0f6441b0a0cbaeda4274a7d7';
   Future<List<Jobs>> fetchJobs() async{    
     try{
       var jobUrl  = Uri.parse('https://customsearch.googleapis.com/customsearch/v1?cx=931e438f39f6499c6&exactTerms=engineer&sort=date&key=AIzaSyCC9TrOYMA6FKhBrd57u113aRIfoy2iDEQ');
