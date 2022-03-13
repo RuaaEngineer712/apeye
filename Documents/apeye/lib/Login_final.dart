@@ -18,7 +18,7 @@ class Login extends State<Login_final>{
 
   final _formkey = GlobalKey<FormState>();
   String _email = '', _password = '';
-  
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,7 @@ class Login extends State<Login_final>{
           child: Column(
           children: [
             SizedBox(height: 100,),
-            Image.asset("assets/images/welcome.jpg", height: 300,),
+            Image.asset("assets/images/apeye_img.jpg", height: 300,),
             Form(
               key: _formkey,
               child: Padding(
@@ -76,25 +76,30 @@ class Login extends State<Login_final>{
                       child: RaisedButton (
                         onPressed: () async{  
                           if(_formkey.currentState!.validate()){
-                            bool shouldNavigate = await signIn(_email, _password);
-                            if (shouldNavigate) {
-                          
-                              
+                            String shouldNavigate = await signIn(_email, _password);
+                            if (shouldNavigate == "Log in") { 
                               Navigator.push(
                                 context,
                                 new MaterialPageRoute(
                                   builder: (context) => new HomeScreen(_email),
+                                  
                                 ),
                               );
                             }
+                            else{
+                              
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(shouldNavigate),
+                              ));
+                            }
                           }
                         },
-                        color: Colors.yellow.withOpacity(0.8),
+                        color: Colors.blue,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                         child: Text(
                           "Login",
                           style: TextStyle(
-                            color: Colors.grey[850],
+                            color: Colors.white,
                             fontSize: 18,
                           ),
                         ),

@@ -1,16 +1,16 @@
 import 'dart:math';
 
-import 'package:apeye/API/model/News_model.dart';
+import 'package:apeye/API/model/Books_model.dart';
 import 'package:apeye/DB/model/Saved_db_model.dart';
 import 'package:apeye/DB/service/Saved_db.dart';
 import 'package:apeye/WebView.dart';
-import 'package:apeye/services/News_services.dart';
-import 'package:apeye/view_models/APIs/news_view_model.dart';
+import 'package:apeye/services/tetsBook_services.dart';
+import 'package:apeye/view_models/APIs/Books_view_model.dart';
 import 'package:googleapis/people/v1.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
-import 'API/model/News.dart';
+import 'API/model/Books.dart';
 import '/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -26,21 +26,21 @@ import '/API/model/load_data.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
 
-class All extends StatefulWidget { 
+class Books_ui extends StatefulWidget { 
   String email;
   List interests;
-    All(this.email,this.interests);
+    Books_ui(this.email,this.interests);
   @override
   State<StatefulWidget> createState() {
     
-    return _All(email,interests);
+    return _Books_ui(email,interests);
   }
 }
 
-class _All extends State<All>{
+class _Books_ui extends State<Books_ui>{
   String email;
   List interests;
-  _All(this.email,this.interests);
+  _Books_ui(this.email,this.interests);
   // News_view_model model = News_view_model();
 
   DatabaseUserManager data = new DatabaseUserManager();
@@ -56,17 +56,17 @@ class _All extends State<All>{
 
   @override
   Widget build(BuildContext context) {
-    print("##############@!!!!!!!!!!!!!!!!!!!!");
-    print(interests);
-    Provider.of<News_view_model>(context, listen: false).fetchNews(interests);  
+    Provider.of<Books_view_model>(context, listen: false).fetchBooks(interests);  
     
-    return Consumer<News_view_model>(builder: (context, News_view_model newsList , child) {
-      print(newsList.newsList);
+    return Consumer<Books_view_model>(builder: (context, Books_view_model booksList , child) {
+      print("*************booksList.booksList*******************");
+      print(booksList.booksList);
       String url;
       return Container(       
         child: Column(
           children: <Widget>[
-            for (News news in newsList.newsList)
+            for (Books books in booksList.booksList)
+            
               Container(     
                 child: InkWell(     
                 child: GestureDetector(
@@ -96,7 +96,7 @@ class _All extends State<All>{
                                         borderRadius: BorderRadius.circular(20), // Image border
                                         child: SizedBox.fromSize(
                                           size: Size.fromRadius(100), // Image radius
-                                          child: Image.network(news.imageUrl, fit: BoxFit.cover),
+                                          child: Image.network(books.img, fit: BoxFit.cover),
                                         ),
                                       
                                       // fit: BoxFit.fitHeight,
@@ -143,11 +143,11 @@ class _All extends State<All>{
                                                 children: [
                                                   Padding(padding: EdgeInsets.only(left: 5, top: 20)),
                                                   SizedBox(width: 120,
-                                                   child:Text(news.title,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 8),),
-                                                  ),Text(news.date,style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold, fontSize: 10),),                                             
+                                                   child:Text(books.title,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 8),),
+                                                  ),Text(books.publishedDate,style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold, fontSize: 10),),                                             
                                     
                                                   // SizedBox(width: 10,),
-                                                                                     
+                                                  // ),                         
                                             
                                                 ],
                                               ),
@@ -168,12 +168,12 @@ class _All extends State<All>{
                                                   onTap: () => {
                                                     setState(() {
                                                       // String id_here = news.id;
-                                                      title_here = news.title;
-                                                      date_here = news.date;
-                                                      description_here = news.description;
-                                                      image_here = news.imageUrl;
-                                                      url_here = news.articleUrl;
-                                                      // Map<String, Object?> mapAPI = {
+                                                      // title_here = books.title;
+                                                      // date_here = books.;
+                                                      // description_here = news.description;
+                                                      // image_here = news.imageUrl;
+                                                      // url_here = news.articleUrl;
+                                                      // // Map<String, Object?> mapAPI = {
                                                       //   'id' : 1,
                                                       //   'image': image_here,
                                                       //   'title': title_here, 
@@ -190,7 +190,8 @@ class _All extends State<All>{
                                                         url: url_here,
 
                                                       );
-                                                      print("*********************");
+                                                      print("*********************Author ...........");
+                                                      // print(books.authors);
                                                       print(toDB.title);
                                                       print("*********************");
                                                       // onSelected(context, 1, toDB);
@@ -203,7 +204,7 @@ class _All extends State<All>{
                                                   child: Text("Share"),
                                                   value: 2,
                                                   onTap: () => {
-                                                    share(context, 2, news.articleUrl),
+                                                    // share(context, 2, books.articleUrl),
                                                   },
                                                 ),
                                               ],                                          
@@ -214,16 +215,18 @@ class _All extends State<All>{
                                     ],
                                   ),
                                 ),
-
-                                Container(                                    
+                                Expanded(child:  Container(                                    
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Padding(padding: EdgeInsets.only(left: 0, top: 20)),
                                       Text('Description:',style: TextStyle(color: Colors.black, fontSize: 11,fontWeight: FontWeight.bold),),
-                                      Text(news.description,style: TextStyle(color: Colors.grey,fontSize: 8,)),                                      
+                                      Flexible(child: Text(books.description,style: TextStyle(color: Colors.grey,fontSize: 8,)),                                      )
+                                      
                                     ],  
-                                  ),  
+                                  ),
+                                  )
+                                  
                                 ),
                               ],
                             ),
@@ -236,22 +239,22 @@ class _All extends State<All>{
                     
                     
                     ),
-                    onTap:() async =>{
-                      url = news.articleUrl,
-                      if (await canLaunch(url)){
-                        print("Hello NOOOOOOOOOOn"),
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                            builder: (context) => new WebViewLoad(url),
-                          ),
-                        ),
-                        // await launch(url),
-                        }
-                      else 
-                        // can't launch url, there is some error
-                        throw "Could not launch ",
-                    },  
+                    // onTap:() async =>{
+                    //   // url = books.articleUrl,
+                    //   if (await canLaunch(url)){
+                    //     print("Hello NOOOOOOOOOOn"),
+                    //     Navigator.push(
+                    //       context,
+                    //       new MaterialPageRoute(
+                    //         builder: (context) => new WebViewLoad(url),
+                    //       ),
+                    //     ),
+                    //     // await launch(url),
+                    //     }
+                    //   else 
+                    //     // can't launch url, there is some error
+                    //     throw "Could not launch ",
+                    // },  
                   ),
                 )                
               ),

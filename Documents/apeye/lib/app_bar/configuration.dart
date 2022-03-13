@@ -22,6 +22,10 @@ List<Map> categories = [
     'name': 'Blogs',
     'iconPath': 'assets/images/course-icon.png'
   },
+  {
+    'name': 'Books',
+    'iconPath': 'assets/images/course-icon.png'
+  },
 ];
 
 List<Map> drawerItems=[

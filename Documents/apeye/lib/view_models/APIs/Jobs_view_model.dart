@@ -9,6 +9,7 @@ class Jobs_view_model extends ChangeNotifier{
    Future<void> fetchJobs() async {
     _jobsList = await Jobs_services().fetchJobs();
     notifyListeners();  
+
   }
 
   List<Jobs> get jobsList => _jobsList;

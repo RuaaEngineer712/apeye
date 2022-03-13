@@ -9,6 +9,7 @@ import 'app_bar/HomeScreen.dart';
 
 class Profile extends StatefulWidget {  
   String old;
+  // List interest;
   Profile(this.old);
   State<StatefulWidget> createState() {
     return _Profile(old);
@@ -16,21 +17,57 @@ class Profile extends StatefulWidget {
 }
 
 class _Profile extends State<Profile>{
+
   String old;
+  // List interest;
   _Profile(this.old);
   final _formkey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
   Map<String , String> arr = new Map<String , String>();
    int index = 0;
+     List interrests = [];
+
+   
 
      DatabaseUserManager data = new DatabaseUserManager();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    
+    super.initState();
+    
+  }
+
+  void callIntersetData() async {
   
+      List fromApi = await data.getInterest(_email);
+      setState(() {
+        print("Data :::::::::::::::::::::::::");
+        print(fromApi);
+        interrests = fromApi;
+        index = 1;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
+    
     _email = this.old;
+    if (interrests.length == 0 && index == 0){
+      callIntersetData();
+    }
+      //   Future<List> fromApi = data.getInterest(_email);
+      // if (interrests.length == 0){
+        
+      //   setState(() {
+      //     fromApi.then((value) => {
+      //       interrests =  value,
+      //       print(value),
+      //     });
+      //   });
+      // }
     return Scaffold(      
       //edit email & password
       body: SingleChildScrollView(
@@ -102,10 +139,10 @@ class _Profile extends State<Profile>{
                                   child: InkWell(   
                                     onTap: () async => {    
                                           setState(() {
-                                            arr[index.toString()] = 'Engineer';
-                                            index++;
+                                            interrests..removeWhere((value) => value == 'Engineer');
+                                            interrests.add('Engineer');
                                           }),
-                                          print(arr),
+                                          
                                           // await data.userData("${email}", arr[0])
                                       },                        
                                   child: Card(
@@ -134,10 +171,10 @@ class _Profile extends State<Profile>{
                                   child: InkWell(   
                                     onTap: () async => {  
                                           setState(() {
-                                            arr[index.toString()] = 'Marketing';
-                                            index++;
+                                            interrests..removeWhere((value) => value == 'Marketing');
+                                            interrests.add('Marketing');
                                           }),
-                                          print(arr),
+                                        
                                           // await data.userData("${email}", arr[0])
                                       },       
                                   child: Card(
@@ -169,10 +206,11 @@ class _Profile extends State<Profile>{
                                   child: InkWell(   
                                     onTap: () async => {   
                                           setState(() {
-                                            arr[index.toString()] = 'Computer';
-                                            index++;
+                                            interrests..removeWhere((value) => value == 'Computer');
+                                            interrests.add('Computer');
                                           }),
-                                          print(arr),
+                                      
+                                          
                                           // await data.userData("${email}", arr[0])
                                       }, 
                                   child: Card(
@@ -200,10 +238,9 @@ class _Profile extends State<Profile>{
                                   child: InkWell(   
                                     onTap: () async => {
                                           setState(() {
-                                            arr[index.toString()] = 'Management';
-                                            index++;
+                                            interrests..removeWhere((value) => value == 'Management');
+                                            interrests.add('Management');
                                           }),
-                                          print(arr),
                                           // await data.userData("${email}", arr[0])
                                       },
                                   child: Card(
@@ -224,7 +261,49 @@ class _Profile extends State<Profile>{
                                   ),
                                 ),
                               ],
-                            ),                                                
+                            ),
+                             Column(
+                              children: [   
+                                Padding(padding: EdgeInsets.only(bottom: 50)),
+                                for(var interrest in interrests)
+                                
+                                // Text(interrest.toString()),
+                                Row(children: [
+                                  Text(interrest.toString()),
+                                  
+                                  InkWell(
+                                      child: Icon(Icons.close),
+                                      onTap: ()  => {
+                                        setState(() {
+                                          interrests..removeWhere((element) => element == interrest);
+                                          // arr..removeWhere((key, value) => value == interrest);
+                                        })
+                                      }
+                                    ),
+                                ],)
+                                
+                                // InkWell(
+                                //   child: Icon(Icons.close),
+                                //   onTap: ()  => {
+                                //     arr.remove(entry.key.toString()),
+                                //   }
+                                // ),
+                                // for (var entry in arr.entries)
+                                // Row(
+                                //   children: [
+                                //     Padding(padding: EdgeInsets.only(left: 80, top: 40)),
+                                //     Text(entry.value.toString()),
+                                //     InkWell(
+                                //       child: Icon(Icons.close),
+                                //       onTap: ()  => {
+                                //         arr.remove(entry.key.toString()),
+                                //       }
+                                //     ),
+                                //   ],
+                                // )                      
+                                
+                              ],
+                            )                                                          
                           ],
                         ),
                       ),
@@ -246,7 +325,7 @@ class _Profile extends State<Profile>{
                     onPressed: () async{
                         print("****************");
                         print(arr);
-                        await data.updateProfile(old, _email, _password , arr);
+                        await data.updateProfile(old, _email, _password , interrests);
                         // await data.updateInterest(_email, arr);
 
                         Navigator.push(
@@ -267,4 +346,9 @@ class _Profile extends State<Profile>{
       )
     );
   }
+  // Future<List> getInterests(String email)async{
+  //   DatabaseUserManager data = new DatabaseUserManager();
+    
+  //   return await data.getInterest(email);
+  // }
 }

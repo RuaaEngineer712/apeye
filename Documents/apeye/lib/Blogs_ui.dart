@@ -376,7 +376,7 @@ class _Blogs_ui extends State<Blogs_ui>{
     });
   }
   void onSelected(BuildContext context, int item, String image, String title, String time, String description, String url) async{      
-    await data.SavedPost('Noon@gmail.com',image, title, time, description, url);
+    await data.SavedPost(email ,image, title, time, description, url);
   }
 
   Future<void> share(BuildContext context, int item, dynamic url) async{

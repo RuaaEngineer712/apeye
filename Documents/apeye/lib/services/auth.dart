@@ -12,34 +12,37 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 
-Future<bool> signIn(String email, String password) async{
+Future<String> signIn(String email, String password) async{
+  String verification;
   try{
     await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-    return true;
-  }
-  catch(e){
-    print(e);
-    return false;
-  }
-}
-
-Future<String> register(String email, String password) async{
-  String verification = '';
-  try{
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-    return 'success'; 
-
-  } on FirebaseAuthException catch(e){
-    if(e.code == 'weak-password'){
-      verification ='the password is too weak';
-    }
-    else if(e.code == 'email-already-in-use'){
-      verification ='account is already exist';
-    }
+    verification = "Log in";
     return verification;
   }
   catch(e){
-    // print(e.toString());
+    print(e);
+    return "wrong email or password";
+  }
+}
+Future<String> register(String email, String password) async {
+  String verification = '';
+  try {
+    await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+        verification = 'success';
+        print(verification);
+    return verification;
+  } on FirebaseAuthException catch (e) {
+     if (e.code == 'email-already-in-use') {
+      verification = 'account is already exist';
+    }
+    else if (e.code == 'weak-password') {
+      verification = 'the password is too weak';
+    }
+    print(verification);
+    return verification;
+  } catch (e) {
+    print(e.toString());
     return e.toString();
   }
 }
@@ -110,24 +113,35 @@ Future<void> userData(String email, Map<String , String> interest) async{
 
 Future<List> getInterest(String email) async{
   try{    
-    print("***************" "************ \n\n\n\n\n before get interest"); 
+    print("***************" "************ \n\n\n\n\n before get interest"+ "\n\n\n "+ email); 
     var data = [];
     final querySnapshot = await Interests.where('email', isEqualTo: email).get()
     .then((querySnapshot) {
-        
         querySnapshot.docs.forEach((doc) {
             data = doc['interest'].values.toList();
+            // print("data : \t\t\t "+doc['interest']);
         });
-        // print("&&&&&&&##3####");
-        // print(data);
-        
     });
+    
     return data;
-    // return [];
   }
   catch(e){
     print(e.toString());
     return [];
+  }
+}
+
+Future<void> deleteInterest(String email) async{
+  try{    
+    
+    final querySnapshot = await Interests.where('email', isEqualTo: email).get();
+    for (var doc in querySnapshot.docs) {
+        await Interests.doc('interest').delete();
+      }
+    print("***************" "************  deleted" );
+  }
+  catch(e){
+    print(e.toString());
   }
 }
 
@@ -161,7 +175,7 @@ Future<void> delete_save_post(String email, String title) async{
   }
 }
 
-Future<bool> updateProfile(String old, String email, String password , Map<String , String> interest) async{
+Future<bool> updateProfile(String old, String email, String password , List<dynamic> interest) async{
   try{
       
       FirebaseAuth.instance.currentUser?.updateEmail(email);
@@ -172,11 +186,12 @@ Future<bool> updateProfile(String old, String email, String password , Map<Strin
       // Future<DocumentSnapshot<Object?>> user =  Interests.doc(old).get();  
 
       final querySnapshot = await Interests.where('email' , isEqualTo: old).get();
+      print(interest);
 
       for (var doc in querySnapshot.docs) {
         await Interests.doc(doc.id).update({
           'email' : email,
-          "interest" : interest
+          "interest" :{for (var item  in interest) interest.indexOf(item).toString() : item}
         });
       }
 

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 class News_services{
   final String key = 'd6f8838c0f6441b0a0cbaeda4274a7d7';
+  // final String urlBook = "https://openlibrary.org/search/subjects?q=${interest}";
   Future<List<News>> fetchNews(List interests) async{    
     try{
       var url;
@@ -15,10 +16,8 @@ class News_services{
             print(interests);
           for(String interest in interests) {
           
-            url  = Uri.parse('https://newsapi.org/v2/top-headlines?country=us&category=${interest}&apiKey=d6f8838c0f6441b0a0cbaeda4274a7d7');
-            
-            // var url_sport  = Uri.parse('https://newsapi.org/v2/top-headlines?country=us&category=sport&apiKey=d6f8838c0f6441b0a0cbaeda4274a7d7');
-            
+            url  = Uri.parse('https://newsapi.org/v2/top-headlines?country=in&category=${interest}&apiKey=d6f8838c0f6441b0a0cbaeda4274a7d7');
+                    
             http.Response response = await http.get(url);
             List<News> news_list = [];
             if(response.statusCode == 200){

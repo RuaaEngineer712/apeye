@@ -9,17 +9,19 @@ import '/services/auth.dart';
 
 class DrawerScreen extends StatefulWidget {
   String email;
-  DrawerScreen(this.email);
+  List interest;
+  DrawerScreen(this.email, this.interest);
 
   @override
-  _DrawerScreenState createState() => _DrawerScreenState(email);
+  _DrawerScreenState createState() => _DrawerScreenState(email, interest);
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
   DatabaseUserManager data = new DatabaseUserManager();
   int onClick = 0;
   String email;
-  _DrawerScreenState(this.email);
+  List interest;
+  _DrawerScreenState(this.email, this.interest);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

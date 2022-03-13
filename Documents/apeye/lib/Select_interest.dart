@@ -1,5 +1,7 @@
 import 'dart:ffi';
 
+import 'package:http/http.dart';
+
 import '/app_bar/HomeScreen.dart';
 import '/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,9 @@ class _Select extends State<Select_interest> {
   String email;
 
    Map<String , String> arr = new Map<String , String>();
+   String values = '';
    int index = 0;
+   
 
   _Select(this.email);
   
@@ -29,6 +33,7 @@ class _Select extends State<Select_interest> {
   
   @override
   Widget build(BuildContext context) {
+    // String values = arr[index.toString()];
     return Scaffold(
       body: SingleChildScrollView (
         child: Column(
@@ -67,6 +72,8 @@ class _Select extends State<Select_interest> {
                         child: InkWell(   
                           onTap: () async => {    
                             setState(() {
+                              arr..removeWhere((key, value) => value == 'Engineer');
+
                               arr[index.toString()] = 'Engineer';
                               index++;
                             }),
@@ -94,6 +101,8 @@ class _Select extends State<Select_interest> {
                         child: InkWell(   
                           onTap: () async => {  
                             setState(() {
+                              arr..removeWhere((key, value) => value == 'Marketing');
+
                               arr[index.toString()] = 'Marketing';
                               index++;
                             }),
@@ -127,6 +136,7 @@ class _Select extends State<Select_interest> {
                         child: InkWell(   
                           onTap: () async => {   
                             setState(() {
+                              arr..removeWhere((key, value) => value == 'Computer');
                               arr[index.toString()] = 'Computer';
                               index++;
                             }),
@@ -154,7 +164,9 @@ class _Select extends State<Select_interest> {
                         child: InkWell(   
                           onTap: () async => {
                             setState(() {
+                              arr..removeWhere((key, value) => value == 'Management');
                               arr[index.toString()] = 'Management';
+                              
                               index++;
                             }),
                             print(arr),
@@ -175,8 +187,31 @@ class _Select extends State<Select_interest> {
                           ),
                         ),
                       ),
+                      
+                      
                     ],
-                  ),                                                
+                  ), 
+                  Column(
+                    children: [   
+                      Padding(padding: EdgeInsets.only(bottom: 50)),
+                      for (var entry in arr.entries)
+                      Row(
+                        children: [
+                          Padding(padding: EdgeInsets.only(left: 80, top: 40)),
+                          Text(entry.value.toString()),
+                          InkWell(
+                            child: Icon(Icons.close),
+                            onTap:(){
+                              setState(() {
+                                arr.remove(entry.key.toString());  
+                              });
+                              
+                            }
+                          ),
+                        ],
+                      )   
+                    ],
+                  )                                               
                 ],
               ),
             ),
@@ -211,6 +246,10 @@ class _Select extends State<Select_interest> {
         )     
       );
     }
+  }
+  Future<void> delete_interest(String email) async{
+    DatabaseUserManager data = new DatabaseUserManager();
+    await data.deleteInterest(email);
   }
 class myClipper extends CustomClipper<Path> {
   Path getClip(Size size) {

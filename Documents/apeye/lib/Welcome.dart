@@ -14,8 +14,9 @@ class Final_Login extends StatelessWidget {
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Image.asset('assets/images/welcome.jpg', height: 300,),
-              SizedBox(height: 20,),
+              SizedBox(height: 80,),
+              Image.asset('assets/images/apeye_img.jpg', height: 300,),
+              SizedBox(height: 10,),
               Column(
                 children: [
                   new Text(
@@ -49,12 +50,12 @@ class Final_Login extends StatelessWidget {
                       ),
                     );
                   },
-                  color: Colors.yellow.withOpacity(0.8),
+                  color: Colors.blue,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
                   child: Text(
                     "Get Started",
                     style: TextStyle(
-                      color: Colors.grey[800],
+                      color: Colors.white,
                       fontSize: 16,
                     ),
                   ),

@@ -1,23 +1,26 @@
 import 'package:apeye/services/auth.dart';
 import 'package:apeye/view_models/APIs/Blogs_view_model.dart';
+import 'package:apeye/view_models/APIs/Books_view_model.dart';
 import 'package:apeye/view_models/APIs/Jobs_view_model.dart';
 import 'package:apeye/view_models/APIs/news_view_model.dart';
+import 'package:apeye/view_models/APIs/testJobs_view_model.dart';
+import 'package:googleapis/people/v1.dart';
 import 'package:googleapis/servicemanagement/v1.dart';
 import 'package:provider/provider.dart';
 
 import 'drawerScreen.dart';
-// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../All.dart';
 import '../Jobs_ui.dart';
 import '../Blogs_ui.dart';
+import '../Books_ui.dart';
+
 
 import 'configuration.dart';
 
 
 class HomeScreen extends StatefulWidget {
   String email;
-  // HomeScreen(this.email, this.interest);
   HomeScreen(this.email);
   
   @override
@@ -40,8 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
   bool clicked_news= false;
   bool clicked_job= false;
   bool clicked_blogs= false;
-  
+  bool clicked_books = false;
+  bool container= true;
+
+  bool isLoading = false;
+
   List interrests = [];
+  List interrests1 = ['Engineer'];
+  int index = 0;
     
 
   Future<void> _refresh(){
@@ -52,7 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     print('########### ####### #####');
     
@@ -62,32 +70,28 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
     Widget build(BuildContext context) {
     
-    // print(interrests);
     Future<List> fromApi = get_interest.getInterest(email);
-    
-    
-      print("&&&&&&&##3####6^^^^^^^^^^^^^");
-      print(interrests);
-      if (interrests.length == 0){
+    print("interest in home screen : \n"+interrests.toString());
+      if (interrests.length == 0 && index == 0){
         
         setState(() {
           fromApi.then((value) => {
             interrests =  value,
+            index = 1,
             print(value),
           });
         });
       }
-    
-    final text = MediaQuery.of(context).platformBrightness == Brightness.dark ? 'DarkTheme' : 'LightTheme';
-    String element = '';
+      String element = '';
     return RefreshIndicator(
+      
         edgeOffset: 0,
         onRefresh: _refresh,
         child: Scaffold(
           backgroundColor: Colors.blueGrey, 
           body: Stack(
             children: [
-              DrawerScreen(email),
+              DrawerScreen(email, interrests1),
               AnimatedContainer(
             transform: Matrix4.translationValues(xOffset, yOffset, 0)
               ..scale(scaleFactor)..rotateY(isDrawerOpen? -0.5:0),
@@ -128,8 +132,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   isDrawerOpen=true;
                                 });
                               }),
-                              Column(
-                                children: [
+                              Column(                              
+                                children: [                                  
                                   Text(
                                     'APeye',
                                     style: TextStyle(
@@ -155,7 +159,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Icon(Icons.search),
                               Text('Search...'),
-                              // Icon(Icons.settings)
                             ],
                           ),
                         ),
@@ -193,6 +196,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             clicked_news = true;
                                             clicked_job = false;
                                             clicked_blogs = false;
+                                            clicked_books = false;
+                                            container = false;
                                           })
                                         }
                                         else if(element == "Jobs"){
@@ -201,6 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             clicked_job = true;
                                             clicked_news = false;
                                             clicked_blogs = false;
+                                            clicked_books = false;
+                                            container = false;
                                           })
                                         }
                                         else if(element == "Blogs"){
@@ -209,14 +216,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                             clicked_job = false;
                                             clicked_news = false;
                                             clicked_blogs = true;
+                                            clicked_books = false;
+                                            container = false;
+                                          })
+                                        }                                        
+                                        else if(element == "Books"){
+                                           print(element),
+                                          setState(() {
+                                            clicked_job = false;
+                                            clicked_news = false;
+                                            clicked_blogs = false;
+                                            clicked_books = true;
+                                            container = false;
                                           })
                                         }
-                                        
-                                          // new Container(
-                                            // child: All(),
-                                          // ),
                                         }
-                                      // }
                                     ), 
                                   ),
                                 ],
@@ -225,90 +239,52 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         ),
                       ),
-                      // MultiProvider(
-                      //   providers: [                        
+                      if(container)              
+                      Container(
+                        height: MediaQuery.of(context).size.height,
+                       
+                         child: Visibility(
+                            visible: clicked_news,
+                            
+                            child: ChangeNotifierProvider<News_view_model>(
+                              
+                          create: (context) => News_view_model(),
                           
-                          
-                            
-                            Visibility(
-                              visible: clicked_job,
-                            child: ChangeNotifierProvider<Jobs_view_model>(
-                            create: (context) => Jobs_view_model(),
-                            builder: (context, child) => Jobs_ui(email), 
-                            ),
-                          ),         
-                            
-                             Visibility(
-                              visible: clicked_news,
-                              child: ChangeNotifierProvider<News_view_model>(
-                            create: (context) => News_view_model(),
-                            
-                            builder: (context, child) => All(email, interrests), 
-                            ),
+                          builder: (context, child) => All(email, interrests), 
                           ),
-
-                          Visibility(
-                              visible: clicked_blogs,
-                              child: ChangeNotifierProvider<Blogs_view_model>(
-                            create: (context) => Blogs_view_model(),
-                            builder: (context, child) => Blogs_ui(email), 
-                            ),
-                          ),
-                      //   ],
-                      // ),
-                // ),
-              // ),
-            ],
-          ),
+                        ),
+                      ),
+                     if(container == false) 
+                    Visibility(                        
+                      visible: clicked_job,
+                      child: 
+                      ChangeNotifierProvider<testJobs_view_model>(                          
+                        create: (context) => testJobs_view_model(),
+                        builder: (context, child) => Jobs_ui(email, interrests), 
+                      ),
+                    ), 
+                    Visibility(
+                      visible: clicked_blogs,
+                      child: ChangeNotifierProvider<Blogs_view_model>(
+                        create: (context) => Blogs_view_model(),
+                        builder: (context, child) => Blogs_ui(email), 
+                      ),
+                    ),
+                     Visibility(
+                      visible: clicked_books,
+                      child: ChangeNotifierProvider<Books_view_model>(
+                        create: (context) => Books_view_model(),
+                        builder: (context, child) => Books_ui(email, interrests), 
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
-      // ),
-      // }
-    //       ),
-        
-    //   ),
-    //   ],
-      
-    ),
-      ],
-              ),
-              ),
-    );
-  }
-}
-
-class DataSearch extends SearchDelegate<String>{
-  // Future<void> newslist = new News_view_model().fetchNews(interests);
-  
-
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    return [IconButton(onPressed: (){}, icon: Icon(Icons.clear))];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    return IconButton(
-      onPressed: (){},
-       icon: AnimatedIcon(
-        icon: AnimatedIcons.menu_arrow,
-        progress: transitionAnimation
       ),
     );
   }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    throw UnimplementedError();
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // final suggestionList = query.isEmpty? newslist : newslist;
-    return ListView(
-      children: [
-        // Text(suggestionList),
-      ],
-    );
-  }
 }
+

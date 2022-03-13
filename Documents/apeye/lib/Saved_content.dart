@@ -28,7 +28,6 @@ class Saved_content extends StatefulWidget {
 }
 
 class _Saved_content extends State<Saved_content>{
-  // late Saved_content_model saved;
   String email;
   _Saved_content(this.email);
 
@@ -39,7 +38,6 @@ class _Saved_content extends State<Saved_content>{
 
   
 
-  // late Future<dynamic> saved_post ;
 
   
   String title = '';
@@ -71,13 +69,6 @@ class _Saved_content extends State<Saved_content>{
   void initState() {
    
     super.initState();
-
-    
-
-    
-
-
-
     refreshSaved();
   }
 
@@ -134,14 +125,13 @@ class _Saved_content extends State<Saved_content>{
                         Navigator.push(
                       context,
                       new MaterialPageRoute(
-                        builder: (context) =>  SearchField(),
+                        builder: (context) =>  SearchField(email),
                       ),
                     );
                       },
                     // ],
                   ),
               ),
-              // for(Saved_content_model save in one_content)
               StreamBuilder<QuerySnapshot>(
       stream: _savedStream,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
