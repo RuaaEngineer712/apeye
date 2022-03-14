@@ -78,11 +78,10 @@ class Login extends State<Login_final>{
                           if(_formkey.currentState!.validate()){
                             String shouldNavigate = await signIn(_email, _password);
                             if (shouldNavigate == "Log in") { 
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 new MaterialPageRoute(
-                                  builder: (context) => new HomeScreen(_email),
-                                  
+                                  builder: (context) =>  HomeScreen(_email),
                                 ),
                               );
                             }
@@ -107,12 +106,12 @@ class Login extends State<Login_final>{
                     ),
                     FlatButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                            builder: (context) => new Registration(),
-                          ),
-                        );
+                        Navigator.pushReplacement(
+                        context,
+                        new MaterialPageRoute(
+                          builder: (context) =>  Registration(),
+                        ),
+                      );
                       },
                       child: Text(
                         "Dont have account!",

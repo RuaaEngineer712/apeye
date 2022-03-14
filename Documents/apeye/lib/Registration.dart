@@ -101,15 +101,12 @@ class Register extends State<Registration>{
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                     content: Text(shouldNavigate),
                                   ));     
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   new MaterialPageRoute(
                                     builder: (context) =>  Select_interest(email),
                                   ),
-                                  
                                 );
-                                
-                              // }
                             } 
                             else{
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -131,7 +128,7 @@ class Register extends State<Registration>{
                     ),
                     FlatButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           new MaterialPageRoute(
                             builder: (context) => new Login_final(),

@@ -58,6 +58,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       ],
                     ),
                     onTap: () => {
+                      
                       print(element),
                       // getElement('profile'), 
                       if(element['title'] == 'profile'){

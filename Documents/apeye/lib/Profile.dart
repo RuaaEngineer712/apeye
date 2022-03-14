@@ -282,26 +282,6 @@ class _Profile extends State<Profile>{
                                     ),
                                 ],)
                                 
-                                // InkWell(
-                                //   child: Icon(Icons.close),
-                                //   onTap: ()  => {
-                                //     arr.remove(entry.key.toString()),
-                                //   }
-                                // ),
-                                // for (var entry in arr.entries)
-                                // Row(
-                                //   children: [
-                                //     Padding(padding: EdgeInsets.only(left: 80, top: 40)),
-                                //     Text(entry.value.toString()),
-                                //     InkWell(
-                                //       child: Icon(Icons.close),
-                                //       onTap: ()  => {
-                                //         arr.remove(entry.key.toString()),
-                                //       }
-                                //     ),
-                                //   ],
-                                // )                      
-                                
                               ],
                             )                                                          
                           ],
@@ -309,8 +289,6 @@ class _Profile extends State<Profile>{
                       ),
               
               SizedBox(height: 100,),
-              // Row(
-                // children: [
                   SizedBox(width: 150,),
                   RaisedButton(
                     color: Colors.blue[900],
@@ -323,10 +301,8 @@ class _Profile extends State<Profile>{
                       ),
                     ),
                     onPressed: () async{
-                        print("****************");
-                        print(arr);
+                       
                         await data.updateProfile(old, _email, _password , interrests);
-                        // await data.updateInterest(_email, arr);
 
                         Navigator.push(
                           context,

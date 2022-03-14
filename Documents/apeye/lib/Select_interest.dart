@@ -229,14 +229,11 @@ class _Select extends State<Select_interest> {
                   ),
                 ),
                 onPressed: () async{
-                  print("****************");
-                  print(arr);
-                  // if the element of arr is exist delete it , if not add it
                   await data.userData(email, arr);
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     new MaterialPageRoute(
-                      builder: (context) => new HomeScreen(email),
+                      builder: (context) =>  HomeScreen(email),
                     ),
                   );
                 }  

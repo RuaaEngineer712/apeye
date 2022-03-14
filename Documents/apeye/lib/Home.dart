@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'All.dart';
+import 'News_ui.dart';
 import 'Menu.dart';
 
 

@@ -2,15 +2,15 @@ import 'package:apeye/services/auth.dart';
 import 'package:apeye/view_models/APIs/Blogs_view_model.dart';
 import 'package:apeye/view_models/APIs/Books_view_model.dart';
 import 'package:apeye/view_models/APIs/Jobs_view_model.dart';
-import 'package:apeye/view_models/APIs/news_view_model.dart';
 import 'package:apeye/view_models/APIs/testJobs_view_model.dart';
+import 'package:apeye/view_models/APIs/News_view_model.dart';
 import 'package:googleapis/people/v1.dart';
 import 'package:googleapis/servicemanagement/v1.dart';
 import 'package:provider/provider.dart';
 
 import 'drawerScreen.dart';
 import 'package:flutter/material.dart';
-import '../All.dart';
+import '../News_ui.dart';
 import '../Jobs_ui.dart';
 import '../Blogs_ui.dart';
 import '../Books_ui.dart';
@@ -239,11 +239,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         ),
                       ),
-                      if(container)              
-                      Container(
-                        height: MediaQuery.of(context).size.height,
+                      // if(container)              
+                      // Container(
+                      //   height: MediaQuery.of(context).size.height,
                        
-                         child: Visibility(
+                      //    child: 
+                      // ),
+                    //  if(container == false) 
+                    Visibility(
                             visible: clicked_news,
                             
                             child: ChangeNotifierProvider<News_view_model>(
@@ -253,8 +256,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           builder: (context, child) => All(email, interrests), 
                           ),
                         ),
-                      ),
-                     if(container == false) 
                     Visibility(                        
                       visible: clicked_job,
                       child: 
