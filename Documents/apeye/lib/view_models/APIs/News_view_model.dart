@@ -6,13 +6,13 @@ class News_view_model extends ChangeNotifier {
   List<News_test> _newsList = [];
   
   Future<void> fetchNews(List interests) async {
-    // for(String interest in interests)
+    for(String interest in interests){
     _newsList = await News_services().fetchNews(
       query: {
-        "q": '${interests}', "country": 'US', "lang": 'en', "when": '${interests}'
+        "q": '${interest}', "country": 'US', "lang": 'en', "when": '${interest}'
       },
     );
-
+    }
     print(_newsList);
     notifyListeners();
   }

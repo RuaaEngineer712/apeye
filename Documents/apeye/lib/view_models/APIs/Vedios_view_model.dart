@@ -6,13 +6,17 @@ class Vedios_view_model extends ChangeNotifier {
   List<Vedios> _vediosList = [];
   
   Future<void> fetchVedios(List interests) async {
-    for(String interest in interests)
-    _vediosList = await Video_services().fetchVedios(
+    List<Vedios> interesetVideos = [];
+    for(String interest in interests){
+    interesetVideos = [];
+    interesetVideos = await Video_services().fetchVedios(
       query: {
         "q": '${interest}'
       },
     );
 
+      _vediosList = [..._vediosList , ...interesetVideos];
+    }
     print(_vediosList);
     notifyListeners();
   }

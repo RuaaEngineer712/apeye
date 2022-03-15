@@ -25,8 +25,8 @@ class Vedios {
       // name: jsonData['name']!= null ? jsonData['name'] : 'name',
       title: jsonData['title'] != null ? jsonData['title'] : '',
       url: jsonData['url'] != null ? jsonData['url'] : 'url',
-      author: jsonData['author']['name'] != null ? jsonData['author']['name'] : '',
-      thumbnails: jsonData['bestThumbnail']['url'] != null ? jsonData['bestThumbnail']['url'] : '',
+      author: jsonData['author'] != null ? jsonData['author']['name'] : '',
+      thumbnails: jsonData['bestThumbnail'] != null ? jsonData['bestThumbnail']['url'] : '',
       // descriptionShort: jsonData['descriptionShort'] != null ? jsonData['descriptionShort'] : '',
     );
   }

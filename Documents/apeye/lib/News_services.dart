@@ -6,11 +6,11 @@ import 'package:apeye/API/model/News_model.dart';
 import 'package:http/http.dart' as http;
 
 class News_services {
-  static const _api_key = "06cd474b17mshd78dae40c40d880p131192jsn68d40042bb96";
-  static const String _baseUrl = "google-news1.p.rapidapi.com";
+  static const _api_key = "4cf703aaa3msh01970ce058042bap1c558ejsn8016b00c5c93";
+  static const String _baseUrl = "google-news.p.rapidapi.com";
   static const Map<String, String> _headers = {
     "content-type": "application/json",
-    "x-rapidapi-host": "google-news1.p.rapidapi.com",
+    "x-rapidapi-host": "google-news.p.rapidapi.com",
     "x-rapidapi-key": _api_key,
   };
   Future<List<News_test>> fetchNews({

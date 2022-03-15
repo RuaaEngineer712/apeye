@@ -185,7 +185,7 @@ class _Vedios_ui extends State<Vedios_ui> {
                                                       // print(toDB.title);
                                                       // print("*********************");
                                                       // // onSelected(context, 1, toDB);
-                                                      // onSelected(context, 1, image_here, title_here, date_here, description_here, url_here);
+                                                      onSelected(context, 1, vedios.thumbnails, vedios.title, vedios.author, "", vedios.url);
                                                     }),
                                                     
                                                   },
@@ -194,7 +194,7 @@ class _Vedios_ui extends State<Vedios_ui> {
                                                   child: Text("Share"),
                                                   value: 2,
                                                   onTap: () => {
-                                                    // share(context, 2, books.articleUrl),
+                                                    share(context, 2, vedios.url),
                                                   },
                                                 ),
                                               ],                                          
