@@ -48,12 +48,15 @@ class _Jobs_ui extends State<Jobs_ui> {
       print(jobsList.jobsList);
       String url;
       return Container(
+        height: MediaQuery.of(context).size.height,
+        color: Colors.grey[200],
           child: Column(children: <Widget>[
         SizedBox(
           height: 20,
         ),
         for (Jobs jobs in jobsList.jobsList)
           Container(
+
             child: InkWell(
               child: GestureDetector(
                 child: Container(

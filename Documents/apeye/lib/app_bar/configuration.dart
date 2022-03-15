@@ -7,10 +7,6 @@ List<BoxShadow> shadowList = [
 
 List<Map> categories = [
   {
-    'name': 'all',
-    'iconPath' : 'assets/images/view.png'
-  },
-  {
     'name': 'News',
     'iconPath' : 'assets/images/new-icon.png'
   },
@@ -19,12 +15,12 @@ List<Map> categories = [
     'iconPath': 'assets/images/job-icon.png'
   },
   {
-    'name': 'Blogs',
-    'iconPath': 'assets/images/course-icon.png'
+    'name': 'Books',
+    'iconPath': 'assets/images/books.png'
   },
   {
-    'name': 'Books',
-    'iconPath': 'assets/images/course-icon.png'
+    'name': 'Vedios',
+    'iconPath': 'assets/images/videos.png'
   },
 ];
 

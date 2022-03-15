@@ -269,6 +269,7 @@ class _Profile extends State<Profile>{
                                 
                                 // Text(interrest.toString()),
                                 Row(children: [
+                                  Padding(padding: EdgeInsets.only(left: 80, top: 40)),
                                   Text(interrest.toString()),
                                   
                                   InkWell(

@@ -6,7 +6,7 @@ import 'package:apeye/API/model/News_model.dart';
 import 'package:http/http.dart' as http;
 
 class News_services {
-  static const _api_key = "99b9587abdmshaf1a689b0758402p1fe876jsn56a8b0714e25";
+  static const _api_key = "06cd474b17mshd78dae40c40d880p131192jsn68d40042bb96";
   static const String _baseUrl = "google-news1.p.rapidapi.com";
   static const Map<String, String> _headers = {
     "content-type": "application/json",
@@ -14,17 +14,13 @@ class News_services {
     "x-rapidapi-key": _api_key,
   };
   Future<List<News_test>> fetchNews({
-    // required String endpoint,
     required Map<String, String> query,
-    // required List interest,
   }) async {
     
     Uri uri = Uri.https(_baseUrl, "/search" , query);
     print(_baseUrl);
     http.Response response = await http.get(uri, headers: _headers);
     if (response.statusCode == 200) {
-      // return json.decode(response.body);
-      print("data.toString()");
       String data = response.body;
       var jsonData = jsonDecode(data);
 

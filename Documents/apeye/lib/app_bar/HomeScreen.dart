@@ -1,13 +1,16 @@
+import 'package:apeye/Vedios_ui.dart';
 import 'package:apeye/services/auth.dart';
 import 'package:apeye/view_models/APIs/Blogs_view_model.dart';
 import 'package:apeye/view_models/APIs/Books_view_model.dart';
 import 'package:apeye/view_models/APIs/Jobs_view_model.dart';
+import 'package:apeye/view_models/APIs/Vedios_view_model.dart';
 import 'package:apeye/view_models/APIs/testJobs_view_model.dart';
 import 'package:apeye/view_models/APIs/News_view_model.dart';
 import 'package:googleapis/people/v1.dart';
 import 'package:googleapis/servicemanagement/v1.dart';
 import 'package:provider/provider.dart';
 
+import '../SearchField.dart';
 import 'drawerScreen.dart';
 import 'package:flutter/material.dart';
 import '../News_ui.dart';
@@ -44,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool clicked_job= false;
   bool clicked_blogs= false;
   bool clicked_books = false;
+  bool clicked_vedios = false;
   bool container= true;
 
   bool isLoading = false;
@@ -63,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     print('########### ####### #####');
+    
     
     
   }
@@ -88,10 +93,13 @@ class _HomeScreenState extends State<HomeScreen> {
         edgeOffset: 0,
         onRefresh: _refresh,
         child: Scaffold(
-          backgroundColor: Colors.blueGrey, 
+          backgroundColor: Colors.white, 
           body: Stack(
-            children: [
-              DrawerScreen(email, interrests1),
+            children: [ 
+          
+              isDrawerOpen? DrawerScreen(email, interrests1,isDrawerOpen):
+              Text("isLoading ..."),
+              
               AnimatedContainer(
             transform: Matrix4.translationValues(xOffset, yOffset, 0)
               ..scale(scaleFactor)..rotateY(isDrawerOpen? -0.5:0),
@@ -108,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 50,
                       ),
                       Container(
+                        // height: MediaQuery.of(context).size.height,
                         margin: EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,6 +164,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20)
                           ),
+                          // child: TextField(
+                          //   decoration: const InputDecoration(
+                              
+                          //     prefixIcon : Icon(Icons.search),
+                          //     hintText: ('Search...'),hintStyle: TextStyle(color: Colors.grey,fontSize: 15,fontWeight: FontWeight.bold),),
+                          //     onTap: (){
+                          //       Navigator.push(
+                          //     context,
+                          //     new MaterialPageRoute(
+                          //       builder: (context) =>  SearchField(email),
+                          //     ),
+                          //   );
+                          //     },
+                          //   // ],
+                          // ),
                           child: Row(
                             children: [
                               Icon(Icons.search),
@@ -197,6 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             clicked_job = false;
                                             clicked_blogs = false;
                                             clicked_books = false;
+                                            clicked_vedios = false;
                                             container = false;
                                           })
                                         }
@@ -207,6 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             clicked_news = false;
                                             clicked_blogs = false;
                                             clicked_books = false;
+                                            clicked_vedios = false;
                                             container = false;
                                           })
                                         }
@@ -217,6 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             clicked_news = false;
                                             clicked_blogs = true;
                                             clicked_books = false;
+                                            clicked_vedios = false;
                                             container = false;
                                           })
                                         }                                        
@@ -227,6 +254,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                             clicked_news = false;
                                             clicked_blogs = false;
                                             clicked_books = true;
+                                            clicked_vedios = false;
+                                            container = false;
+                                          })
+                                        }
+                                        else if(element == "Vedios"){
+                                           print(element),
+                                          setState(() {
+                                            clicked_job = false;
+                                            clicked_news = false;
+                                            clicked_blogs = false;
+                                            clicked_books = false;
+                                            clicked_vedios = true;
                                             container = false;
                                           })
                                         }
@@ -239,15 +278,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         ),
                       ),
-                      // if(container)              
-                      // Container(
-                      //   height: MediaQuery.of(context).size.height,
+                      if(container)              
+                      Container(
+                        height: MediaQuery.of(context).size.height,
                        
-                      //    child: 
-                      // ),
-                    //  if(container == false) 
+                      ),
+                     if(container == false) 
+                     
                     Visibility(
                             visible: clicked_news,
+                            
                             
                             child: ChangeNotifierProvider<News_view_model>(
                               
@@ -278,6 +318,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context, child) => Books_ui(email, interrests), 
                       ),
                     ),
+                    Visibility(                        
+                      visible: clicked_vedios,
+                      child: 
+                      ChangeNotifierProvider<Vedios_view_model>(                          
+                        create: (context) => Vedios_view_model(),
+                        builder: (context, child) => Vedios_ui(email, interrests), 
+                      ),
+                    ), 
                   ],
                 ),
               ),

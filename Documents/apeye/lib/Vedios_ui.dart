@@ -1,16 +1,14 @@
 import 'dart:math';
 
-import 'package:apeye/API/model/Books_model.dart';
-import 'package:apeye/DB/model/Saved_db_model.dart';
-import 'package:apeye/DB/service/Saved_db.dart';
+// import 'package:apeye/API/model/News_model.dart';
 import 'package:apeye/WebView.dart';
-import 'package:apeye/services/tetsBook_services.dart';
-import 'package:apeye/view_models/APIs/Books_view_model.dart';
+import 'services/Video_services.dart';
+import 'package:apeye/view_models/APIs/Vedios_view_model.dart';
 import 'package:googleapis/people/v1.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
-import 'API/model/Books.dart';
+import 'API/model/Videos.dart';
 import '/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -22,57 +20,49 @@ import 'package:flutter_share/flutter_share.dart';
 
 import '/API/model/load_data.dart';
 
-
 // import 'package:url_launcher/url_launcher.dart';
 
-
-class Books_ui extends StatefulWidget { 
+class Vedios_ui extends StatefulWidget {
   String email;
   List interests;
-    Books_ui(this.email,this.interests);
+  Vedios_ui(this.email, this.interests);
   @override
   State<StatefulWidget> createState() {
-    
-    return _Books_ui(email,interests);
+    return _Vedios_ui(email, interests);
   }
 }
 
-class _Books_ui extends State<Books_ui>{
+class _Vedios_ui extends State<Vedios_ui> {
   String email;
   List interests;
-  _Books_ui(this.email,this.interests);
-  // News_view_model model = News_view_model();
+  _Vedios_ui(this.email, this.interests);
 
   DatabaseUserManager data = new DatabaseUserManager();
 
   String name_here = '';
-  String title_here='';
-  String date_here='';
-  String description_here='';
-  String image_here='';
+  String description_here = '';
   String url_here = '';
-  
-  
+  String image_here = '';
+  String author_here = '';
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<Books_view_model>(context, listen: false).fetchBooks(interests);  
-    
-    return Consumer<Books_view_model>(builder: (context, Books_view_model booksList , child) {
-      print("*************booksList.booksList*******************");
-      print(booksList.booksList);
+    print("##############@!!!!!!!!!!!!!!!!!!!!");
+    print(interests);
+    Provider.of<Vedios_view_model>(context, listen: false).fetchVedios(interests);
+
+    return Consumer<Vedios_view_model>(
+        builder: (context, Vedios_view_model vediosList, child) {
+      print(vediosList.vediosList);
       String url;
-      return Container(       
+      return Container(
         child: Column(
           children: <Widget>[
-            for (Books books in booksList.booksList)
-            
-              Container(     
-                child: InkWell(     
+            for (Vedios vedios in vediosList.vediosList)
+              Container(
+                  child: InkWell(
                 child: GestureDetector(
-                  child: 
-                   
-                  Container(
+                  child: Container(
                     height: 240,
                     margin: EdgeInsets.symmetric(horizontal: 20),                  
                     
@@ -96,7 +86,7 @@ class _Books_ui extends State<Books_ui>{
                                         borderRadius: BorderRadius.circular(20), // Image border
                                         child: SizedBox.fromSize(
                                           size: Size.fromRadius(100), // Image radius
-                                          child: Image.network(books.img, fit: BoxFit.cover),
+                                          child: Image.network(vedios.thumbnails, fit: BoxFit.cover),
                                         ),
                                       
                                       // fit: BoxFit.fitHeight,
@@ -143,8 +133,8 @@ class _Books_ui extends State<Books_ui>{
                                                 children: [
                                                   Padding(padding: EdgeInsets.only(left: 5, top: 20)),
                                                   SizedBox(width: 120,
-                                                   child:Text(books.title,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 8),),
-                                                  ),Text(books.publishedDate,style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold, fontSize: 10),),                                             
+                                                   child:Text(vedios.title,style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold, fontSize: 8),),
+                                                  ),Text(vedios.author,style: TextStyle(color: Colors.grey[600],fontWeight: FontWeight.bold, fontSize: 10),),                                             
                                     
                                                   // SizedBox(width: 10,),
                                                   // ),                         
@@ -181,21 +171,21 @@ class _Books_ui extends State<Books_ui>{
                                                       //   'description': description_here,
                                                         
                                                       // };
-                                                      Saved_content_model toDB = Saved_content_model(
-                                                        id: 15,
-                                                        image: image_here,
-                                                        title: title_here, 
-                                                        date: date_here,
-                                                        description: description_here,
-                                                        url: url_here,
+                                                      // Saved_content_model toDB = Saved_content_model(
+                                                      //   id: 15,
+                                                      //   image: image_here,
+                                                      //   title: title_here, 
+                                                      //   date: date_here,
+                                                      //   description: description_here,
+                                                      //   url: url_here,
 
-                                                      );
-                                                      print("*********************Author ...........");
-                                                      // print(books.authors);
-                                                      print(toDB.title);
-                                                      print("*********************");
-                                                      // onSelected(context, 1, toDB);
-                                                      onSelected(context, 1, books.img, books.title, books.publishedDate, books.description, "");
+                                                      // );
+                                                      // print("*********************Author ...........");
+                                                      // // print(books.authors);
+                                                      // print(toDB.title);
+                                                      // print("*********************");
+                                                      // // onSelected(context, 1, toDB);
+                                                      // onSelected(context, 1, image_here, title_here, date_here, description_here, url_here);
                                                     }),
                                                     
                                                   },
@@ -215,19 +205,19 @@ class _Books_ui extends State<Books_ui>{
                                     ],
                                   ),
                                 ),
-                                Expanded(child:  Container(                                    
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(padding: EdgeInsets.only(left: 0, top: 20)),
-                                      Text('Description:',style: TextStyle(color: Colors.black, fontSize: 11,fontWeight: FontWeight.bold),),
-                                      Flexible(child: Text(books.description,style: TextStyle(color: Colors.grey,fontSize: 8,)),                                      )
+                                // Expanded(child:  Container(                                    
+                                //   child: Column(
+                                //     crossAxisAlignment: CrossAxisAlignment.start,
+                                //     children: [
+                                //       Padding(padding: EdgeInsets.only(left: 0, top: 20)),
+                                //       Text('Description:',style: TextStyle(color: Colors.black, fontSize: 11,fontWeight: FontWeight.bold),),
+                                //       Flexible(child: Text(books.description,style: TextStyle(color: Colors.grey,fontSize: 8,)),                                      )
                                       
-                                    ],  
-                                  ),
-                                  )
+                                //     ],  
+                                //   ),
+                                //   )
                                   
-                                ),
+                                // ),
                               ],
                             ),
                           ), 
@@ -239,22 +229,22 @@ class _Books_ui extends State<Books_ui>{
                     
                     
                     ),
-                    // onTap:() async =>{
-                    //   // url = books.articleUrl,
-                    //   if (await canLaunch(url)){
-                    //     print("Hello NOOOOOOOOOOn"),
-                    //     Navigator.push(
-                    //       context,
-                    //       new MaterialPageRoute(
-                    //         builder: (context) => new WebViewLoad(url),
-                    //       ),
-                    //     ),
-                    //     // await launch(url),
-                    //     }
-                    //   else 
-                    //     // can't launch url, there is some error
-                    //     throw "Could not launch ",
-                    // },  
+                    onTap:() async =>{
+                      url = vedios.url,
+                      if (await canLaunch(url)){
+                        print("Hello NOOOOOOOOOOn"),
+                        Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                            builder: (context) => new WebViewLoad(url),
+                          ),
+                        ),
+                        // await launch(url),
+                        }
+                      else 
+                        // can't launch url, there is some error
+                        throw "Could not launch ",
+                    },  
                   ),
                 )                
               ),

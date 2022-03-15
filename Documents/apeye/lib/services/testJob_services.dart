@@ -16,7 +16,7 @@ class testJob_services {
       for (String interest in interests) {
         print(interest);
         url = Uri.parse(
-            'https://customsearch.googleapis.com/customsearch/v1?cx=931e438f39f6499c6&exactTerms=${interest}&sort=date&key=AIzaSyDlnxiqX3EHbHNRHoKMHcwryuUS4hlVMDE');
+            'https://customsearch.googleapis.com/customsearch/v1?cx=931e438f39f6499c6&exactTerms=${interest}&sort=date&key=AIzaSyA0P0AaI20OKT8-Hs751jCuZCXSqZcbAvs');
 
         http.Response response = await http.get(url);
         List<Jobs> jobs_list = [];

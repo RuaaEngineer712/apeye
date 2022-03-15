@@ -10,10 +10,11 @@ import '/services/auth.dart';
 class DrawerScreen extends StatefulWidget {
   String email;
   List interest;
-  DrawerScreen(this.email, this.interest);
+  var isDrawerOpen;
+  DrawerScreen(this.email, this.interest, this.isDrawerOpen);
 
   @override
-  _DrawerScreenState createState() => _DrawerScreenState(email, interest);
+  _DrawerScreenState createState() => _DrawerScreenState(email, interest, isDrawerOpen);
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
@@ -21,9 +22,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
   int onClick = 0;
   String email;
   List interest;
-  _DrawerScreenState(this.email, this.interest);
+  bool isDrawerOpen;
+  _DrawerScreenState(this.email, this.interest, this.isDrawerOpen);
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: Container(
         color: Colors.blueGrey[900],
@@ -113,6 +116,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
         ),
       ),
     );
+
+    
   }
   void getElement(String element){
     switch(element){

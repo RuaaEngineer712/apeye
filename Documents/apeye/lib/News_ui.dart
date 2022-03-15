@@ -54,6 +54,8 @@ class _All extends State<All> {
       print(newsList.newsList);
       String url;
       return Container(
+        // height: MediaQuery.of(context).size.height*0.7,
+        color: Colors.grey[200],
         child: Column(
           children: <Widget>[
             for (News_test news in newsList.newsList)
@@ -171,13 +173,13 @@ class _All extends State<All> {
                                                     setState(() {
                                                       // String id_here = news.id;
                                                       title_here = news.title;
-                                                      // date_here = news.date;
+                                                      // date_here = news.publishedAt;
                                                       // description_here =
                                                       //     news.description;
                                                       // image_here =
                                                       //     news.imageUrl;
-                                                      // url_here =
-                                                      //     news.articleUrl;
+                                                      url_here =
+                                                          news.link;
                                                       // Map<String, Object?> mapAPI = {
                                                       //   'id' : 1,
                                                       //   'image': image_here,
@@ -214,29 +216,29 @@ class _All extends State<All> {
                                     ],
                                   ),
                                 ),
-                                Container(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 0, top: 20)),
-                                      Text(
-                                        'Description:',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      // Text(news.description,
-                                      //     style: TextStyle(
-                                      //       color: Colors.grey,
-                                      //       fontSize: 8,
-                                      //     )),
-                                    ],
-                                  ),
-                                ),
+                              //   Container(
+                              //     child: Column(
+                              //       crossAxisAlignment:
+                              //           CrossAxisAlignment.start,
+                              //       children: [
+                              //         Padding(
+                              //             padding: EdgeInsets.only(
+                              //                 left: 0, top: 20)),
+                              //         Text(
+                              //           'Description:',
+                              //           style: TextStyle(
+                              //               color: Colors.black,
+                              //               fontSize: 11,
+                              //               fontWeight: FontWeight.bold),
+                              //         ),
+                              //         // Text(news.description,
+                              //         //     style: TextStyle(
+                              //         //       color: Colors.grey,
+                              //         //       fontSize: 8,
+                              //         //     )),
+                              //       ],
+                              //     ),
+                              //   ),
                               ],
                             ),
                           ),
@@ -245,7 +247,7 @@ class _All extends State<All> {
                     ),
                   ),
                   onTap: () async => {
-                    url = news.link,
+                    url = news.link ,
                     if (await canLaunch(url))
                       {
                         print("Hello NOOOOOOOOOOn"),

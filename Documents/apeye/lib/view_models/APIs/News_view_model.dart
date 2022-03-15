@@ -4,11 +4,12 @@ import 'package:flutter/cupertino.dart';
 
 class News_view_model extends ChangeNotifier {
   List<News_test> _newsList = [];
-
+  
   Future<void> fetchNews(List interests) async {
+    // for(String interest in interests)
     _newsList = await News_services().fetchNews(
       query: {
-        "q": 'Engineer', "country": 'US', "lang": 'en', "when": 'Engineer'
+        "q": '${interests}', "country": 'US', "lang": 'en', "when": '${interests}'
       },
     );
 
